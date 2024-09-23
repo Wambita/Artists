@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{.Name}}</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>{{.Name}}</h1>
+    <img src="{{.Image}}" alt="{{.Name}}">
+    <p>Year: {{.Year}}</p>
+    <p>First Album: {{.Album}}</p>
+    <h3>Members:</h3>
+    <ul>
+        {{range .Members}}
+            <li>{{.}}</li>
+        {{end}}
+    </ul>
+    <a href="/">Back to Artists</a>
+</body>
+</html>
