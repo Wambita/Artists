@@ -1,13 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 20px;
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 20px;
+  background: linear-gradient(135deg, #1a2a1d 0%, #0d1f12 100%);
+  min-height: 100vh;
+  color: #e0e0e0;
 }
 
 h1 {
     text-align: center;
-    color: #333;
+    color: #4CAF50;
+    font-size: 2.5em;
+    margin-bottom: 30px;
 }
 
 .artist-list {
@@ -17,13 +23,18 @@ h1 {
 }
 
 .artist {
-    background: white;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
     margin: 10px;
     padding: 15px;
     width: 200px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     text-align: center;
+}
+artist :hover{
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(76, 175, 80, 0.3);
 }
 
 .artist img {
