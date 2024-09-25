@@ -3,18 +3,44 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Error - Groupie Trackers</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <title>Error - Groupie Trackers</title> <!--should display error code instead-->
+    <link rel="stylesheet" href="/static/error.css">
 </head>
 <body>
-    <header>
-        <h1>Error 404</h1>
-        <a href="/">Back to Home</a>
-    </header>
-    <main>
-        <div class="error-message">
-            <p>{{.}}</p>
-        </div>
-    </main>
+    <div class="particles" id="particles"></div>
+    <div class="error-container">
+      <div class="glitch-wrapper">
+        <h1 class="glitch" data-text="404">404</h1><!--code-->
+      </div>
+      <h2>{{.}}</h2> 
+      <p>{{.}}</p>
+      <a href="/" class="btn"> Home</a>
+    </div>
+
+    <!--particle animation-->
+    <script>
+        function createParticle() {
+          const particle = document.createElement('div');
+          particle.classList.add('particle');
+          
+          const size = Math.random() * 5 + 2;
+          particle.style.width = `${size}px`;
+          particle.style.height = `${size}px`;
+          
+          particle.style.left = `${Math.random() * 100}vw`;
+          particle.style.top = `-${size}px`;
+          
+          const duration = Math.random() * 3 + 2;
+          particle.style.animationDuration = `${duration}s`;
+          
+          document.getElementById('particles').appendChild(particle);
+          
+          setTimeout(() => {
+            particle.remove();
+          }, duration * 1000);
+        }
+    
+        setInterval(createParticle, 100);
+      </script>
 </body>
 </html>
