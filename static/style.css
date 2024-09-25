@@ -136,3 +136,24 @@ h1 {
     margin-bottom: 20px;
     font-weight: 600;
 }
+
+.section-title{
+    font-size:2rem;
+    margin: 40px 0 20px;
+    text-align: center;
+    color: #4CAF50;
+}
+
+.member-list, .date-list{
+    list-style-type: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+/* .member-list li, .date-list li{
+   background-color: rgba(255, 255, 255, 0.05);
+   padding: 20px;
+   borde
+} */
