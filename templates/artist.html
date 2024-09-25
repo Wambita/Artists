@@ -7,38 +7,36 @@
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <div class="artist-list">
-        <div class="artist-card">        
-            <img src="{{.Image}}" alt="{{.Name}}" class="artist-image">
-            <div class="artist-name">
-                <a>{{.Name}}</a>
+    <div class="container">
+        <div class="artist-profile">
+            <div class="artist-image-container">
+                <img src="{{.Image}}" alt="{{.Name}}" class="artist-image" width="400px" height="400px" 
             </div>
-            </a>
-        </div>
-    </div>
-    
-    <div class="artist-list">
-        <div class="artist-card">
-            <div class="content">
+            <div class="artist-info">
+                <h1>{{.Name}}</h1>
                 <h3>Year of creation:</h3>
                 <p>{{.Year}}</p>
                 <h3>Year of First Album:</h3>
                 <p>{{.Album}}</p>
             </div>
         </div>
-        <div class="artist-card">
-            <div class="content">
-                <h3>Members:</h3>
-                <ul>
-                    {{range .Members}}
-                        <li>{{.}}</li>
-                    {{end}}
-                </ul>
-            </div>            
+        <h2 class="section-title">Band Members</h2>
+        <ul class="member-list">
+            {{range .Members}}
+                <li>{{.}}</li>
+            {{end}}
+        </ul>
+    </div>
         </div>
     </div>
-    
-    
-    <a href="/">Back to Artists</a>
+
+    <ul class="date-list" id="tour-dates">
+    <li>
+        <span class="location"></span>
+        <span class="date"></span>
+    </li>
+    </ul>
+
+    <a href="/" class="button">Back to Artists</a>
 </body>
 </html>
