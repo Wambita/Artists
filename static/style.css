@@ -88,6 +88,12 @@ h1 {
   }
 
   /*Artist page styling*/
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
   .artist-profile{
     display: flex;
     flex-wrap: wrap;
@@ -105,6 +111,28 @@ h1 {
     width: 100%;
     height: auto;
     border-radius: 10px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    box-shadow: 0 15px 30px rgba(76, 175, 80, 0.3);
     transition: all 0.3 ease 
   }
+
+  .artist-image:hover{
+    transform: scale(1.05);
+    box-shadow: 0 15px 30px rgba(76, 175, 80, 0.3);
+  }
+
+  .artist-info{
+    flex:2;
+    max-width: 600px;
+  }
+
+  h1{
+    font-size: 3.4rem;
+    margin-bottom: 10px;
+    color:#4CAF50;
+  }
+.artist-genre {
+    font-size: 1.2rem;
+    color: #66BB6A;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
