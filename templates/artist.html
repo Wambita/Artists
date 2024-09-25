@@ -10,13 +10,13 @@
     <div class="container">
         <div class="artist-profile">
             <div class="artist-image-container">
-                <img src="{{.Image}}" alt="{{.Name}}" class="artist-image" width="400px" height="400px" 
+                <img src="{{.Image}}" alt="{{.Name}}" class="artist-image" width="400" height="400">
             </div>
             <div class="artist-info">
                 <h1>{{.Name}}</h1>
-                <h3>Year of creation:</h3>
+                <h3 class="artist-genre">Year of creation:</h3>
                 <p>{{.Year}}</p>
-                <h3>Year of First Album:</h3>
+                <h3 class="artist-genre">Year of First Album:</h3>
                 <p>{{.Album}}</p>
             </div>
         </div>
@@ -29,11 +29,11 @@
     </div>
         </div>
     </div>
-
+    <h2 class="section-title">Location and Dates</h2>
     <ul class="date-list" id="tour-dates">
     <li>
-        <span class="location"></span>
-        <span class="date"></span>
+        <span class="location">USA</span>
+        <span class="date">10/10/2024</span>
     </li>
     </ul>
 
