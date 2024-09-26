@@ -24,7 +24,7 @@ func ArtistHandler(w http.ResponseWriter, r *http.Request) {
 
 	artistID := r.URL.Query().Get("id")
 	for _, artist := range Artists {
-		if fmt.Sprintf("%d", artistID) == artistID {
+		if fmt.Sprintf("%d", artist.ID) == artistID {
 			// pass the artist into the template
 			err := Templates.ExecuteTemplate(w, "artist.html", artist)
 			if err != nil {
@@ -40,19 +40,19 @@ func ErrorHandler(w http.ResponseWriter, r *http.Request, message string, status
 	mu.Lock()
 	defer mu.Unlock()
 
-	//error page instance with error details
+	// error page instance with error details
 	errorPage := ErrorPage{
-		Code: statusCode,
-		Name: http.StatusText(statusCode),
-		message: message, 
+		Code:    statusCode,
+		Name:    http.StatusText(statusCode),
+		Message: message,
 	}
 
-	//set http status code in the response header
+	// set http status code in the response header
 	w.WriteHeader(statusCode)
 
-	//render the error page template
+	// render the error page template
 	err := Templates.ExecuteTemplate(w, "error.html", errorPage)
-    if err!= nil {
-        http.Error(w, "Internal Server Error", http.StatusInternalServerError)
-    }
+	if err != nil {
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+	}
 }
