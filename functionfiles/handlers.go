@@ -23,6 +23,10 @@ func ArtistHandler(w http.ResponseWriter, r *http.Request) {
 	defer mu.Unlock()
 
 	artistID := r.URL.Query().Get("id")
+	if artistID == "" {
+		http.Error(w, "Artist ID is required", http.StatusBadRequest)
+		return
+	}
 	for _, artist := range Artists {
 		if fmt.Sprintf("%d", artist.ID) == artistID {
 			// pass the artist into the template

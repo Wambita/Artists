@@ -7,7 +7,7 @@ import (
 
 var Templates *template.Template
 
-func InitializeTemplate() {
+func InitializeTemplates() {
 	var err error
 	Templates, err = template.ParseGlob("templates/*.html")
 	if err != nil {

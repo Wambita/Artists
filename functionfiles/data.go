@@ -35,7 +35,7 @@ func fetchData(url string, target interface{}) error {
 }
 
 // loadData fetch data concurrently from all apis
-func loadData() {
+func LoadData() {
 	var wg sync.WaitGroup
 	wg.Add(4)
 
