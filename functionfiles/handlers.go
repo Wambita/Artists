@@ -3,6 +3,9 @@ package groupie_tracker
 import (
 	"fmt"
 	"net/http"
+	"io/ioutil"
+	"log"
+	"encoding/json"
 )
 
 // home page handler
@@ -24,11 +27,14 @@ func ArtistHandler(w http.ResponseWriter, r *http.Request) {
 
 	artistID := r.URL.Query().Get("id")
 	if artistID == "" {
-		http.Error(w, "Artist ID is required", http.StatusBadRequest)
+		ErrorHandler(w, r, "Artist ID is required", http.StatusBadRequest)
 		return
 	}
-	for _, artist := range Artists {
+	for _, artist := range Artists {		
 		if fmt.Sprintf("%d", artist.ID) == artistID {
+			artist.DatesLocations = reletions(artistID)
+			fmt.Println(artist.DatesLocations)
+			
 			// pass the artist into the template
 			err := Templates.ExecuteTemplate(w, "artist.html", artist)
 			if err != nil {
@@ -37,6 +43,38 @@ func ArtistHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
+}
+
+//function for getting reletions
+func reletions(id string) map[string][]string{
+	url := "https://groupietrackers.herokuapp.com/api/relation/"+id
+
+	resp, err1 := http.Get(url)
+	if err1 != nil {
+		log.Fatal(err1)
+	}
+	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
+
+	if err != nil {
+		fmt.Println("Error reading response:", err)
+	}
+
+	// Define a struct for the expected data structure
+	type ApiResponse struct {
+		DatesLocations map[string][]string `json:"datesLocations"`
+	}
+
+	// Unmarshal into the struct
+	var response ApiResponse
+	err = json.Unmarshal(body, &response)
+	if err != nil {
+		log.Fatal("Error unmarshalling:", err)
+	}
+
+	// return the DatesLocations map
+	return response.DatesLocations
 }
 
 // ierror page handler
