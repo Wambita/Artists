@@ -8,6 +8,7 @@ type Artist struct {
 	Year    int      `json:"creationDate"`
 	Album   string   `json:"firstAlbum"`
 	Members []string `json:"members"`
+	DatesLocations map[string][]string
 }
 
 // location struct
