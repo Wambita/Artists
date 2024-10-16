@@ -32,17 +32,13 @@
     <h2 class="section-title">Location and Dates</h2>
     <ul class="date-list" id="tour-dates">
         {{range $key, $value := .DatesLocations}}
+            {{range $value}}
             <li>
                 <span class="location">{{$key}}</span>
-                {{range $value}}
-                    <span class="date">{{.}}</span>
-                {{end}}
+                <span class="date">{{.}}</span>
             </li>
+            {{end}}
         {{end}}
-    <li>
-        <span class="location">USA</span>
-        <span class="date">10/10/2024</span>
-    </li>
     </ul>
 
     <div class="button-sec">

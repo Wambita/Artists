@@ -10,9 +10,6 @@ import (
 
 // home page handler
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
-	mu.Lock()
-	defer mu.Unlock()
-
 	// pass artists slice to the template
 	err := Templates.ExecuteTemplate(w, "index.html", Artists)
 	if err != nil {
@@ -22,9 +19,6 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 
 // artist page handler (indivdual artist)
 func ArtistHandler(w http.ResponseWriter, r *http.Request) {
-	mu.Lock()
-	defer mu.Unlock()
-
 	artistID := r.URL.Query().Get("id")
 	if artistID == "" {
 		ErrorHandler(w, r, "Artist ID is required", http.StatusBadRequest)
@@ -79,8 +73,6 @@ func reletions(id string) map[string][]string{
 
 // ierror page handler
 func ErrorHandler(w http.ResponseWriter, r *http.Request, message string, statusCode int) {
-	mu.Lock()
-	defer mu.Unlock()
 
 	// error page instance with error details
 	errorPage := ErrorPage{
