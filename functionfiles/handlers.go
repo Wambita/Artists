@@ -27,7 +27,7 @@ func ArtistHandler(w http.ResponseWriter, r *http.Request) {
 	for _, artist := range Artists {		
 		if fmt.Sprintf("%d", artist.ID) == artistID {
 			artist.DatesLocations = reletions(artistID)
-			fmt.Println(artist.DatesLocations)
+			// fmt.Println(artist.DatesLocations)
 			
 			// pass the artist into the template
 			err := Templates.ExecuteTemplate(w, "artist.html", artist)
