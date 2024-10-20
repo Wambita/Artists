@@ -74,6 +74,6 @@ License
 This project is licensed under the MIT License. Feel free to use and modify the code as you see fit.
 
 ## Authors
-* Wambita Fana
-* Franklyne Namayi
-* Tomlee Abila
+* [Wambita Fana]()
+* [Franklyne Namayi]()
+* [Tomlee Abila]()
