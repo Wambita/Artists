@@ -72,3 +72,8 @@ If you would like to contribute to the project, please fork the repository and s
 License
 
 This project is licensed under the MIT License. Feel free to use and modify the code as you see fit.
+
+## Authors
+* Wambita Fana
+* Franklyne Namayi
+* Tomlee Abila
