@@ -1,11 +1,11 @@
 package groupie_tracker
 
 import (
+	"encoding/json"
 	"fmt"
-	"net/http"
 	"io/ioutil"
 	"log"
-	"encoding/json"
+	"net/http"
 )
 
 // home page handler
@@ -24,11 +24,13 @@ func ArtistHandler(w http.ResponseWriter, r *http.Request) {
 		ErrorHandler(w, r, "Artist ID is required", http.StatusBadRequest)
 		return
 	}
-	for _, artist := range Artists {		
+	for _, artist := range Artists {
 		if fmt.Sprintf("%d", artist.ID) == artistID {
 			artist.DatesLocations = reletions(artistID)
+			artist.Locations = locations(artistID)
+			artist.ConcertDates = dates(artistID)
 			// fmt.Println(artist.DatesLocations)
-			
+
 			// pass the artist into the template
 			err := Templates.ExecuteTemplate(w, "artist.html", artist)
 			if err != nil {
@@ -39,9 +41,9 @@ func ArtistHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-//function for getting reletions
-func reletions(id string) map[string][]string{
-	url := "https://groupietrackers.herokuapp.com/api/relation/"+id
+// function for getting locations
+func locations(id string) []string {
+	url := "https://groupietrackers.herokuapp.com/api/locations/" + id
 
 	resp, err1 := http.Get(url)
 	if err1 != nil {
@@ -50,7 +52,68 @@ func reletions(id string) map[string][]string{
 	defer resp.Body.Close()
 
 	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Println("Error reading response:", err)
+	}
 
+	// Define a struct for the expected data structure
+	type ApiResponse struct {
+		Locations []string `json:"locations"`
+	}
+
+	// Unmarshal into the struct
+	var response ApiResponse
+	err = json.Unmarshal(body, &response)
+	if err != nil {
+		log.Fatal("Error unmarshalling:", err)
+	}
+
+	// return the DatesLocations map
+	return response.Locations
+}
+
+// function for getting  dates
+func dates(id string) []string {
+	url := "https://groupietrackers.herokuapp.com/api/dates/" + id
+
+	resp, err1 := http.Get(url)
+	if err1 != nil {
+		log.Fatal(err1)
+	}
+	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Println("Error reading response:", err)
+	}
+
+	// Define a struct for the expected data structure
+	type ApiResponse struct {
+		ConcertDates []string `json:"dates"`
+	}
+
+	// Unmarshal into the struct
+	var response ApiResponse
+	err = json.Unmarshal(body, &response)
+	if err != nil {
+		log.Fatal("Error unmarshalling:", err)
+	}
+
+	// return the DatesLocations map
+	return response.ConcertDates
+}
+
+// function for getting reletions
+func reletions(id string) map[string][]string {
+	url := "https://groupietrackers.herokuapp.com/api/relation/" + id
+
+	resp, err1 := http.Get(url)
+	if err1 != nil {
+		log.Fatal(err1)
+	}
+	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		fmt.Println("Error reading response:", err)
 	}
@@ -73,7 +136,6 @@ func reletions(id string) map[string][]string{
 
 // ierror page handler
 func ErrorHandler(w http.ResponseWriter, r *http.Request, message string, statusCode int) {
-
 	// error page instance with error details
 	errorPage := ErrorPage{
 		Code:    statusCode,

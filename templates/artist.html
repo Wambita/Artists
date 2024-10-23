@@ -29,6 +29,21 @@
     </div>
         </div>
     </div>
+
+    <h2 class="section-title">Locations</h2>
+    <ul class="member-list">
+        {{range .Locations}}
+            <li>{{.}}</li>
+        {{end}}
+    </ul>
+
+    <h2 class="section-title">Dates</h2>
+    <ul class="member-list">
+        {{range .ConcertDates}}
+            <li>{{.}}</li>
+        {{end}}
+    </ul>
+
     <h2 class="section-title">Location and Dates</h2>
     <ul class="date-list" id="tour-dates">
         {{range $key, $value := .DatesLocations}}
