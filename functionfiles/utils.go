@@ -13,4 +13,6 @@ func InitializeTemplates() {
 	if err != nil {
 		log.Fatalf("Error parsing templates: %v", err)
 	}
+
+	
 }

@@ -6,10 +6,16 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strconv"
 )
 
 // home page handler
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		ErrorHandler(w, r, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
 	// pass artists slice to the template
 	err := Templates.ExecuteTemplate(w, "index.html", Artists)
 	if err != nil {
@@ -19,11 +25,29 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 
 // artist page handler (indivdual artist)
 func ArtistHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		ErrorHandler(w, r, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	// Check if the request path is exactly /artist
+	if r.URL.Path != "/artist" {
+		ErrorHandler(w, r, fmt.Sprintf("The Requested path %s does not exist", r.URL.Path), http.StatusNotFound)
+		return
+	}
+
 	artistID := r.URL.Query().Get("id")
 	if artistID == "" {
 		ErrorHandler(w, r, "Artist ID is required", http.StatusBadRequest)
 		return
 	}
+	// Parse the artist ID
+	id, err := strconv.Atoi(artistID)
+	if err != nil || id < 0 || id > 52 {
+		ErrorHandler(w, r, "Invalid Artist ID. It must be a number between 0 and 52.", http.StatusBadRequest)
+		return
+	}
+
 	for _, artist := range Artists {
 		if fmt.Sprintf("%d", artist.ID) == artistID {
 			artist.DatesLocations = reletions(artistID)
