@@ -10,35 +10,20 @@ import (
 )
 
 func main() {
-	// load data
+	// Load data
 	groupie_tracker.LoadData()
 
-	// initialize templates
+	// Initialize templates
 	groupie_tracker.InitializeTemplates()
 
-	// set routes
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		path := r.URL.Path
+	// Set routes
+	http.HandleFunc("/", groupie_tracker.RouteHandler)
 
-		switch path{
-		case "/":
-			groupie_tracker.HomeHandler(w, r)
-		case "/artist":
-			if r.URL.Query().Get("id") == "" {
-				groupie_tracker.ErrorHandler(w, r, "Artist ID is required", http.StatusBadRequest)
-				return
-			}
-			groupie_tracker.ArtistHandler(w, r)
-		default:
-			groupie_tracker.ErrorHandler(w, r, fmt.Sprintf("The Requested path  %s  does not exist", path), http.StatusNotFound)
-		}
-	})
-
-	// server static files
-	fs := http.FileServer(http.Dir("./static"))
+	// Serve static files
+	fs := http.FileServer(http.Dir("static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
-	// start server
+	// Start server
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"

@@ -16,7 +16,7 @@ const (
 
 // gloabl vars for storing data
 var (
-	Artists   []Artist
+	Artists []Artist
 )
 
 // fetch json data form a url and decodes ot into target interface
@@ -36,5 +36,42 @@ func LoadData() {
 		log.Println("Error fetching artist:", err)
 		return
 	}
-	Artists = ar		
+	Artists = ar
+}
+
+// Function to fetch locations from the URL
+func fetchLocations(url string) ([]string, error) {
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	// Define a struct for the expected response
+	type LocationsResponse struct {
+		Locations []string `json:"locations"` // Adjust the JSON key based on your API response structure
+	}
+
+	var locationsResponse LocationsResponse
+	if err := json.NewDecoder(resp.Body).Decode(&locationsResponse); err != nil {
+		return nil, err
+	}
+
+	return locationsResponse.Locations, nil
+}
+// Function to fetch concert dates from the URL
+func fetchDates(url string) ([]string, error) {
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	// Define a struct for the expected response
+	var dates []string
+	if err := json.NewDecoder(resp.Body).Decode(&dates); err != nil {
+		return nil, err
+	}
+
+	return dates, nil
 }
