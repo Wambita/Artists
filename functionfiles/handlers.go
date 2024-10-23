@@ -87,8 +87,9 @@ func ArtistHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// pass the artist into the template
-	err := Templates.ExecuteTemplate(w, "artist.html", artist)
-	if err != nil {
+	err1 := Templates.ExecuteTemplate(w, "artist.html", Artists[id-1])
+
+	if err1 != nil {
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 }
 			return
