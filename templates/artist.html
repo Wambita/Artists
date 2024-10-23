@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{.Name}}</title>
     <link rel="stylesheet" href="/static/style.css">
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -26,39 +31,90 @@
                 <li>{{.}}</li>
             {{end}}
         </ul>
+   
+
+    <!-- Dropdown for selecting view -->
+    <div class="view-selection">
+        <label for="view-select">Select View:</label>
+        <select id="view-select" onchange="toggleViews()">
+            <option value="locationsAndDates" selected>Locations and Dates</option>
+            <option value="locations">Locations</option>
+            <option value="dates">Dates</option>
+        </select>
     </div>
-        </div>
-    </div>
 
-    <h2 class="section-title">Locations</h2>
-    <ul class="member-list">
-        {{range .Locations}}
-            <li>{{.}}</li>
-        {{end}}
-    </ul>
-
-    <h2 class="section-title">Dates</h2>
-    <ul class="member-list">
-        {{range .ConcertDates}}
-            <li>{{.}}</li>
-        {{end}}
-    </ul>
-
-    <h2 class="section-title">Location and Dates</h2>
-    <ul class="date-list" id="tour-dates">
-        {{range $key, $value := .DatesLocations}}
-            {{range $value}}
-            <li>
-                <span class="location">{{$key}}</span>
-                <span class="date">{{.}}</span>
-            </li>
+    <!-- Sections for Locations, Dates, and Location with Dates -->
+   
+    <div id="locations" class="hidden">
+        <h2 class="section-title">Locations</h2>
+        <ul class="member-list">
+            {{range .Locations}}
+                <li>{{.}}</li>
             {{end}}
-        {{end}}
-    </ul>
+        </ul>
+    </div>
+
+
+
+    <div id="dates" class="hidden">
+        <h2 class="section-title">Dates</h2>
+        <ul class="member-list">
+            {{range .ConcertDates}}
+                <li>{{.}}</li>
+            {{end}}
+        </ul>
+    </div>
+
+    <div id="locationsAndDates">
+        <h2 class="section-title">Location and Dates</h2>
+        <ul class="date-list" id="tour-dates">
+            {{range $key, $value := .DatesLocations}}
+                {{range $value}}
+                <li>
+                    <span class="location">{{$key}}</span>
+                    <span class="date">{{.}}</span>
+                </li>
+                {{end}}
+            {{end}}
+        </ul>
+    </div>
 
     <div class="button-sec">
         <a href="/" class="button">Back to Artists</a>
     </div>
+    </div>
+
    
+
+    <script>
+        function toggleViews() {
+            const viewSelect = document.getElementById("view-select");
+            const locationsSection = document.getElementById("locations");
+            const datesSection = document.getElementById("dates");
+            const locationsAndDatesSection = document.getElementById("locationsAndDates");
+
+            // Hide all sections by default
+            locationsSection.classList.add("hidden");
+            datesSection.classList.add("hidden");
+            locationsAndDatesSection.style.display = "none";
+
+            // Show the selected section
+            switch (viewSelect.value) {
+                case "locations":
+                    locationsSection.classList.remove("hidden");
+                    break;
+                case "dates":
+                    datesSection.classList.remove("hidden");
+                    break;
+                case "locationsAndDates":
+                    locationsAndDatesSection.style.display = "block";
+                    break;
+            }
+        }
+
+        // Initially display the default view (Locations and Dates)
+        toggleViews();
+    </script>
+
 </body>
 </html>
