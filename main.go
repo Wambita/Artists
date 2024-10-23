@@ -5,7 +5,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"strings"
 
 	groupie_tracker "groupie-tracker/functionfiles"
 )
@@ -18,7 +17,7 @@ func main() {
 	groupie_tracker.InitializeTemplates()
 
 	// Set routes
-	http.HandleFunc("/", routeHandler)
+	http.HandleFunc("/", groupie_tracker.RouteHandler)
 
 	// Serve static files
 	fs := http.FileServer(http.Dir("static"))
@@ -31,28 +30,4 @@ func main() {
 	}
 	fmt.Printf("Starting server on port %s...\n", port)
 	log.Fatal(http.ListenAndServe(":"+port, nil))
-}
-
-// routeHandler handles requests to the defined routes
-func routeHandler(w http.ResponseWriter, r *http.Request) {
-	// Restrict to GET method only
-	if r.Method != http.MethodGet {
-		groupie_tracker.ErrorHandler(w, r, "Method not allowed", http.StatusMethodNotAllowed)
-		return
-	}
-	if strings.HasPrefix(r.URL.Path, "/static/") {
-		http.Error(w, "Access denied", http.StatusForbidden)
-		return
-	}
-
-	// Use switch case to handle specific routes
-
-	switch r.URL.Path {
-	case "/":
-		groupie_tracker.HomeHandler(w, r)
-	case "/artist":
-		groupie_tracker.ArtistHandler(w, r)
-	default:
-		groupie_tracker.ErrorHandler(w, r, fmt.Sprintf("The Requested path %s does not exist", r.URL.Path), http.StatusNotFound)
-	}
 }

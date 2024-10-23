@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"strings"
 )
 
 // home page handler
@@ -20,6 +21,30 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	err := Templates.ExecuteTemplate(w, "index.html", Artists)
 	if err != nil {
 		http.Error(w, "Internal  Server Error", http.StatusInternalServerError)
+	}
+}
+
+// routeHandler handles requests to the defined routes
+func RouteHandler(w http.ResponseWriter, r *http.Request) {
+	// Restrict to GET method only
+	if r.Method != http.MethodGet {
+		ErrorHandler(w, r, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+	if strings.HasPrefix(r.URL.Path, "/static/") {
+		http.Error(w, "Access denied", http.StatusForbidden)
+		return
+	}
+
+	// Use switch case to handle specific routes
+
+	switch r.URL.Path {
+	case "/":
+		HomeHandler(w, r)
+	case "/artist":
+		ArtistHandler(w, r)
+	default:
+		ErrorHandler(w, r, fmt.Sprintf("The Requested path %s does not exist", r.URL.Path), http.StatusNotFound)
 	}
 }
 
