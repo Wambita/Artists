@@ -68,7 +68,7 @@ func ArtistHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	// Parse the artist ID
 	id, err := strconv.Atoi(artistID)
-	if err != nil || id < 0 || id > 52 {
+	if err != nil || id < 1 || id > 52 {
 		ErrorHandler(w, r, "Invalid Artist ID. It must be a number between 0 and 52.", http.StatusBadRequest)
 		return
 	}
@@ -76,15 +76,15 @@ func ArtistHandler(w http.ResponseWriter, r *http.Request) {
 	for _, artist := range Artists {
 		if fmt.Sprintf("%d", artist.ID) == artistID {
 			artist.DatesLocations = reletions(artistID)
-			artist.Locations = locations(artistID)
-			artist.ConcertDates = dates(artistID)
+	artist.Locations = locations(artistID)
+	artist.ConcertDates = dates(artistID)
 			// fmt.Println(artist.DatesLocations)
 
-			// pass the artist into the template
-			err := Templates.ExecuteTemplate(w, "artist.html", artist)
-			if err != nil {
-				http.Error(w, "Internal Server Error", http.StatusInternalServerError)
-			}
+	// pass the artist into the template
+	err := Templates.ExecuteTemplate(w, "artist.html", artist)
+	if err != nil {
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+}
 			return
 		}
 	}
