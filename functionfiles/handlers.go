@@ -91,9 +91,6 @@ func ArtistHandler(w http.ResponseWriter, r *http.Request) {
 
 	if err1 != nil {
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
-}
-			return
-		}
 	}
 }
 
