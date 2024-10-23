@@ -3,17 +3,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Error - Groupie Trackers</title> <!--should display error code instead-->
+    <title>Error - {{.Code}}</title> <!--should display error code instead-->
     <link rel="stylesheet" href="/static/error.css">
 </head>
 <body>
     <div class="particles" id="particles"></div>
     <div class="error-container">
       <div class="glitch-wrapper">
-        <h1 class="glitch" data-text="404">404</h1><!--code-->
+        <h1 class="glitch" data-text="404">{{.Code}}</h1><!--code-->
       </div>
-      <h2>{{.}}</h2> 
-      <p>{{.}}</p>
+      <h2>{{.Name}}</h2> <!--code name-->
+      <p>{{.Message}}</p> <!--simplified message about the error-->
       <a href="/" class="btn"> Home</a>
     </div>
 
