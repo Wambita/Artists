@@ -5,7 +5,8 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"path/filepath"
+
+	// "path/filepath"
 
 	groupie_tracker "groupie-tracker/functionfiles"
 )
@@ -25,18 +26,20 @@ func main() {
 	http.HandleFunc("/", groupie_tracker.RouteHandler)
 
 	// Serve static files
-	http.HandleFunc("/static/", func(w http.ResponseWriter, r *http.Request) {
-		fullPath := filepath.Join("static", r.URL.Path[len("/static/"):])
-		// directory restriction
-		info, err := os.Stat(fullPath)
-		if err == nil && info.IsDir() {
-			// http.Error(w, "Forbidden", http.StatusForbidden)
-			groupie_tracker.ErrorHandler(w, r, "Forbidden", http.StatusForbidden)
-			return
-		}
+	fs := http.FileServer(http.Dir("static"))
+	http.Handle("/static/", http.StripPrefix("/static/", fs))
+	// http.HandleFunc("/static/", func(w http.ResponseWriter, r *http.Request) {
+	// 	fullPath := filepath.Join("static", r.URL.Path[len("/static/"):])
+	// 	// directory restriction
+	// 	info, err := os.Stat(fullPath)
+	// 	if err == nil && info.IsDir() {
+	// 		// http.Error(w, "Forbidden", http.StatusForbidden)
+	// 		groupie_tracker.ErrorHandler(w, r, "Forbidden", http.StatusForbidden)
+	// 		return
+	// 	}
 
-		http.FileServer(http.Dir("static")).ServeHTTP(w, r)
-	})
+	// 	http.FileServer(http.Dir("static")).ServeHTTP(w, r)
+	// })
 
 	// Start server
 	port := os.Getenv("PORT")
