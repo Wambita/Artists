@@ -161,3 +161,24 @@ func TestRouteHandler_InvalidPath(t *testing.T) {
 		t.Errorf("Expected status 404, got %v", rec.Code)
 	}
 }
+
+func TestLocations(t *testing.T) {
+	locations := locations("1")
+	if len(locations) != 2 || locations[0] != "Test Location 1" {
+		t.Errorf("Expected mock locations data, got %v", locations)
+	}
+}
+
+func TestDates(t *testing.T) {
+	dates := dates("1")
+	if len(dates) != 2 || dates[0] != "2022-01-01" {
+		t.Errorf("Expected mock dates data, got %v", dates)
+	}
+}
+
+func TestReletions(t *testing.T) {
+	reletions := reletions("1")
+	if len(reletions) != 2 || reletions["2022-01-01"][0] != "Test Location 1" {
+		t.Errorf("Expected mock relations data, got %v", reletions)
+	}
+}
