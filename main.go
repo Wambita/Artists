@@ -34,7 +34,7 @@ func main() {
 			groupie_tracker.ErrorHandler(w, r, "Forbidden", http.StatusForbidden)
 			return
 		}
-		//
+
 		http.FileServer(http.Dir("static")).ServeHTTP(w, r)
 	})
 
