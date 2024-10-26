@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"path/filepath"
 	"strconv"
 	"strings"
 )
@@ -74,15 +75,15 @@ func ArtistHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Artists[id-1]
-	if (len(Artists[id-1].DatesLocations) == 0){
+	if len(Artists[id-1].DatesLocations) == 0 {
 		Artists[id-1].DatesLocations = reletions(artistID)
 	}
 
-	if (len(Artists[id-1].Locations) == 0){
+	if len(Artists[id-1].Locations) == 0 {
 		Artists[id-1].Locations = locations(artistID)
 	}
 
-	if (len(Artists[id-1].ConcertDates) == 0){
+	if len(Artists[id-1].ConcertDates) == 0 {
 		Artists[id-1].ConcertDates = dates(artistID)
 	}
 
@@ -204,4 +205,16 @@ func ErrorHandler(w http.ResponseWriter, r *http.Request, message string, status
 	if err != nil {
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 	}
+}
+
+func StaticFileHandler(w http.ResponseWriter, r *http.Request) {
+	// Prevent direct access to the static directory
+	if r.URL.Path == "/static/" || r.URL.Path[len("/static/"):] == "" {
+		ErrorHandler(w, r, "Access denied", http.StatusForbidden)
+		return
+	}
+
+	// Serve the requested static file
+	fullPath := filepath.Join("static", r.URL.Path[len("/static/"):])
+	http.ServeFile(w, r, fullPath)
 }
