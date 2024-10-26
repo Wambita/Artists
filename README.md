@@ -1,8 +1,6 @@
 # groupie-tracker
 
 ## Overview
-<body style="background:green">
-</body>
 
 **Groupie Tracker** is a web application designed to receive, manipulate, and display data from a provided API related to music artists, their concert locations, and dates. This project focuses on creating an engaging user experience through various data visualizations while ensuring robust client-server communication.
 
