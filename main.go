@@ -10,6 +10,10 @@ import (
 )
 
 func main() {
+	if len(os.Args) != 1 {
+		fmt.Println("usage: go run .")
+		os.Exit(0)
+	}
 	// Load data
 	groupie_tracker.LoadData()
 
