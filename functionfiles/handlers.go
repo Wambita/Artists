@@ -68,21 +68,21 @@ func ArtistHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	// Parse the artist ID
 	id, err := strconv.Atoi(artistID)
-	if err != nil || id < 1 || id > 52 {
+	if err != nil || id < 1 || id > len(Artists) {
 		ErrorHandler(w, r, "Invalid Artist ID. It must be a number between 0 and 52.", http.StatusBadRequest)
 		return
 	}
 
 	// Artists[id-1]
-	if (len(Artists[id-1].DatesLocations) == 0){
+	if len(Artists[id-1].DatesLocations) == 0 {
 		Artists[id-1].DatesLocations = reletions(artistID)
 	}
 
-	if (len(Artists[id-1].Locations) == 0){
+	if len(Artists[id-1].Locations) == 0 {
 		Artists[id-1].Locations = locations(artistID)
 	}
 
-	if (len(Artists[id-1].ConcertDates) == 0){
+	if len(Artists[id-1].ConcertDates) == 0 {
 		Artists[id-1].ConcertDates = dates(artistID)
 	}
 
@@ -95,7 +95,7 @@ func ArtistHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 // function for getting locations
-func locations(id string) []string {
+var locations = func(id string) []string {
 	url := "https://groupietrackers.herokuapp.com/api/locations/" + id
 
 	resp, err1 := http.Get(url)
@@ -126,7 +126,7 @@ func locations(id string) []string {
 }
 
 // function for getting  dates
-func dates(id string) []string {
+var dates = func(id string) []string {
 	url := "https://groupietrackers.herokuapp.com/api/dates/" + id
 
 	resp, err1 := http.Get(url)
@@ -157,7 +157,7 @@ func dates(id string) []string {
 }
 
 // function for getting reletions
-func reletions(id string) map[string][]string {
+var reletions = func(id string) map[string][]string {
 	url := "https://groupietrackers.herokuapp.com/api/relation/" + id
 
 	resp, err1 := http.Get(url)
