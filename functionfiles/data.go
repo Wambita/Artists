@@ -7,7 +7,7 @@ import (
 )
 
 // Api  urls
-const (
+var (
 	artistsURL   = "https://groupietrackers.herokuapp.com/api/artists"
 	locationsURL = "https://groupietrackers.herokuapp.com/api/locations"
 	datesURL     = "https://groupietrackers.herokuapp.com/api/dates"
@@ -59,6 +59,7 @@ func fetchLocations(url string) ([]string, error) {
 
 	return locationsResponse.Locations, nil
 }
+
 // Function to fetch concert dates from the URL
 func fetchDates(url string) ([]string, error) {
 	resp, err := http.Get(url)
