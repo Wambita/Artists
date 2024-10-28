@@ -68,6 +68,10 @@ func ArtistHandler(w http.ResponseWriter, r *http.Request) {
 		ErrorHandler(w, r, "Artist ID is required", http.StatusBadRequest)
 		return
 	}
+	if len(artistID) > 1 && artistID[0] == '0' {
+		ErrorHandler(w, r, "Invalid Artist ID. Leading zeros are not allowed.", http.StatusBadRequest)
+		return
+	}
 	// Parse the artist ID
 	id, err := strconv.Atoi(artistID)
 	if err != nil || id < 1 || id > 52 {
