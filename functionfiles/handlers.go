@@ -19,6 +19,8 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 
 	// pass artists slice to the template
 	err := Templates.ExecuteTemplate(w, "index.html", Artists)
+	w.WriteHeader(http.StatusOK)
+
 	if err != nil {
 		http.Error(w, "Internal  Server Error", http.StatusInternalServerError)
 	}
