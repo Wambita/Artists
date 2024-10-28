@@ -18,10 +18,10 @@ func main() {
 
 	// Set routes
 	http.HandleFunc("/", groupie_tracker.RouteHandler)
+	http.HandleFunc("/artist", groupie_tracker.ArtistHandler)
 
 	// Serve static files
-	fs := http.FileServer(http.Dir("static"))
-	http.Handle("/static/", http.StripPrefix("/static/", fs))
+	http.HandleFunc("/static/", groupie_tracker.RouteHandler)
 
 	// Start server
 	port := os.Getenv("PORT")
