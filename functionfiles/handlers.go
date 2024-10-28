@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 	"path/filepath"
 	"strconv"
 	"strings"
@@ -216,5 +217,11 @@ func StaticFileHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Serve the requested static file
 	fullPath := filepath.Join("static", r.URL.Path[len("/static/"):])
+
+	if _, err := os.Stat(fullPath); os.IsNotExist(err) {
+		fmt.Println("error: static file not found")
+		return
+	}
+
 	http.ServeFile(w, r, fullPath)
 }
