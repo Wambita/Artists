@@ -106,45 +106,43 @@ func TestArtistHandler(t *testing.T) {
 	}
 }
 
-// func TestRouteHandler_HomePath(t *testing.T) {
-// 	req, err := http.NewRequest("GET", "/", nil)
-// 	if err != nil {
-// 		t.Fatalf("Could not create request: %v", err)
-// 	}
-// 	rec := httptest.NewRecorder()
-
-// 	RouteHandler(rec, req)
-
-// 	if rec.Code != http.StatusOK {
-// 		t.Errorf("Expected status 200, got %v", rec.Code)
-// 	}
-// }
-
-func TestRouteHandler_ArtistPath(t *testing.T) {
-	req, err := http.NewRequest("GET", "/artist?id=1", nil)
-	if err != nil {
-		t.Fatalf("Could not create request: %v", err)
+func TestRouteHandler(t *testing.T) {
+	tests := []struct {
+		name           string
+		path           string
+		expectedStatus int
+	}{
+		{
+			name:           "Home Path",
+			path:           "/",
+			expectedStatus: http.StatusOK,
+		},
+		{
+			name:           "Artist Path",
+			path:           "/artist?id=1",
+			expectedStatus: http.StatusOK,
+		},
+		{
+			name:           "Invalid Path",
+			path:           "/nonexistent",
+			expectedStatus: http.StatusNotFound,
+		},
 	}
-	rec := httptest.NewRecorder()
 
-	RouteHandler(rec, req)
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			req, err := http.NewRequest("GET", tt.path, nil)
+			if err != nil {
+				t.Fatalf("Could not create request: %v", err)
+			}
+			rec := httptest.NewRecorder()
 
-	if rec.Code != http.StatusOK {
-		t.Errorf("Expected status 200, got %v", rec.Code)
-	}
-}
+			RouteHandler(rec, req)
 
-func TestRouteHandler_InvalidPath(t *testing.T) {
-	req, err := http.NewRequest("GET", "/nonexistent", nil)
-	if err != nil {
-		t.Fatalf("Could not create request: %v", err)
-	}
-	rec := httptest.NewRecorder()
-
-	RouteHandler(rec, req)
-
-	if rec.Code != http.StatusNotFound {
-		t.Errorf("Expected status 404, got %v", rec.Code)
+			if rec.Code != tt.expectedStatus {
+				t.Errorf("Expected status %v, got %v", tt.expectedStatus, rec.Code)
+			}
+		})
 	}
 }
 
