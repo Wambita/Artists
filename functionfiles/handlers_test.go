@@ -53,70 +53,56 @@ func TestArtistHandler(t *testing.T) {
 		},
 	}
 
-	req, err := http.NewRequest("GET", "/artist?id=1", nil)
-	if err != nil {
-		t.Fatalf("Could not create request: %v", err)
+	tests := []struct {
+		name           string
+		url            string
+		expectedStatus int
+		expectedBody   string
+	}{
+		{
+			name:           "Valid ID",
+			url:            "/artist?id=1",
+			expectedStatus: http.StatusOK,
+			expectedBody:   "Test Artist",
+		},
+		{
+			name:           "Missing ID",
+			url:            "/artist",
+			expectedStatus: http.StatusBadRequest,
+			expectedBody:   "Artist ID is required",
+		},
+		{
+			name:           "Invalid ID",
+			url:            "/artist?id=abc",
+			expectedStatus: http.StatusBadRequest,
+			expectedBody:   "Invalid Artist ID",
+		},
+		{
+			name:           "Out-of-bounds ID",
+			url:            "/artist?id=100",
+			expectedStatus: http.StatusBadRequest,
+		},
 	}
-	rec := httptest.NewRecorder()
 
-	ArtistHandler(rec, req)
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			req, err := http.NewRequest("GET", tt.url, nil)
+			if err != nil {
+				t.Fatalf("Could not create request: %v", err)
+			}
+			rec := httptest.NewRecorder()
 
-	if rec.Code != http.StatusOK {
-		t.Errorf("Expected status 200, got %v", rec.Code)
-	}
+			ArtistHandler(rec, req)
 
-	// Optional: Check if the response body contains expected data
-	expectedContent := "Test Artist"
-	if !strings.Contains(rec.Body.String(), expectedContent) {
-		t.Errorf("Expected content %q in response body, got %v", expectedContent, rec.Body.String())
-	}
-}
+			if rec.Code != tt.expectedStatus {
+				t.Errorf("Expected status %v, got %v", tt.expectedStatus, rec.Code)
+			}
 
-func TestArtistHandler_MissingID(t *testing.T) {
-	req, err := http.NewRequest("GET", "/artist", nil) // Missing ID
-	if err != nil {
-		t.Fatalf("Could not create request: %v", err)
-	}
-	rec := httptest.NewRecorder()
-
-	ArtistHandler(rec, req)
-
-	if rec.Code != http.StatusBadRequest {
-		t.Errorf("Expected status 400, got %v", rec.Code)
-	}
-	if !strings.Contains(rec.Body.String(), "Artist ID is required") {
-		t.Errorf("Expected error message, got %v", rec.Body.String())
-	}
-}
-
-func TestArtistHandler_InvalidID(t *testing.T) {
-	req, err := http.NewRequest("GET", "/artist?id=abc", nil) // Non-numeric ID
-	if err != nil {
-		t.Fatalf("Could not create request: %v", err)
-	}
-	rec := httptest.NewRecorder()
-
-	ArtistHandler(rec, req)
-
-	if rec.Code != http.StatusBadRequest {
-		t.Errorf("Expected status 400, got %v", rec.Code)
-	}
-	if !strings.Contains(rec.Body.String(), "Invalid Artist ID") {
-		t.Errorf("Expected invalid ID error message, got %v", rec.Body.String())
-	}
-}
-
-func TestArtistHandler_OutOfBoundsID(t *testing.T) {
-	req, err := http.NewRequest("GET", "/artist?id=100", nil) // Out-of-bounds ID
-	if err != nil {
-		t.Fatalf("Could not create request: %v", err)
-	}
-	rec := httptest.NewRecorder()
-
-	ArtistHandler(rec, req)
-
-	if rec.Code != http.StatusBadRequest {
-		t.Errorf("Expected status 400, got %v", rec.Code)
+			// Check if expected body content is present (optional for some cases)
+			if tt.expectedBody != "" && !strings.Contains(rec.Body.String(), tt.expectedBody) {
+				t.Errorf("Expected content %q in response body, got %v", tt.expectedBody, rec.Body.String())
+			}
+		})
 	}
 }
 
