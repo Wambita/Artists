@@ -218,8 +218,8 @@ func StaticFileHandler(w http.ResponseWriter, r *http.Request) {
 	// Serve the requested static file
 	fullPath := filepath.Join("static", r.URL.Path[len("/static/"):])
 
-	if _, err := os.Stat(fullPath); os.IsNotExist(err) {
-		fmt.Println("error: static file not found")
+	if _, err3 := os.Stat(fullPath); os.IsNotExist(err3) {
+		fmt.Printf("error: %v\n", err3)
 		return
 	}
 
