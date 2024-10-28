@@ -32,10 +32,18 @@ func RouteHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if strings.HasPrefix(r.URL.Path, "/static/") {
-		http.Error(w, "Access denied", http.StatusForbidden)
+		ErrorHandler(w, r, "Access denied", http.StatusForbidden)
 		return
 	}
-
+	if strings.HasPrefix(r.URL.Path, "/static/styles.css") {
+		ErrorHandler(w, r, "Access denied", http.StatusForbidden)
+		return
+	}
+	if strings.HasPrefix(r.URL.Path, "/static/error.css") {
+		ErrorHandler(w, r, "Access denied", http.StatusForbidden)
+		return
+	}
+	fmt.Println(r.URL.Path)
 	// Use switch case to handle specific routes
 
 	switch r.URL.Path {
