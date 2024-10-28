@@ -2,6 +2,7 @@ package groupie_tracker
 
 import (
 	"html/template"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"strings"
@@ -164,5 +165,108 @@ func TestReletions(t *testing.T) {
 	reletions := reletions("1")
 	if len(reletions) != 2 || reletions["2022-01-01"][0] != "Test Location 1" {
 		t.Errorf("Expected mock relations data, got %v", reletions)
+	}
+}
+
+
+func TestHomeHandler(t *testing.T) {
+	// Create a response recorder to capture the response.
+	recorder := httptest.NewRecorder()
+
+	tests := []struct {
+		name           string
+		method         string
+		expectedStatus int
+	}{
+		{
+			name:           "GET request",
+			method:         http.MethodGet,
+			expectedStatus: http.StatusOK,
+		},
+		{
+			name:           "POST request",
+			method:         http.MethodPost,
+			expectedStatus: http.StatusMethodNotAllowed,
+		},
+		{
+			name:           "PUT request",
+			method:         http.MethodPut,
+			expectedStatus: http.StatusMethodNotAllowed,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			// Create a new request with the method specified in the test case.
+			req, err := http.NewRequest(tt.method, "/", nil)
+			if err != nil {
+				t.Fatalf("Failed to create request: %v", err)
+			}
+
+			// Reset the response recorder for each test case.
+			recorder = httptest.NewRecorder()
+
+			// Call the handler with the recorder and request.
+			HomeHandler(recorder, req)
+
+			// Check if the status code matches the expected status.
+			if got := recorder.Code; got != tt.expectedStatus {
+				t.Errorf("Expected status %d, got %d", tt.expectedStatus, got)
+			}
+		})
+	}
+}
+
+
+
+func TestErrorHandler(t *testing.T) {
+	recorder := httptest.NewRecorder()
+
+	tests := []struct {
+		name           string
+		message        string
+		statusCode     int
+		expectedStatus int
+		expectedBody   string
+	}{
+		{
+			name:           "Valid error handling",
+			message:        "Test error message",
+			statusCode:     http.StatusNotFound,
+			expectedStatus: http.StatusNotFound,
+			expectedBody:   "Test error message",
+		},
+		{
+			name:           "Internal server error during template execution",
+			message:        "Internal Server Error",
+			statusCode:     http.StatusInternalServerError,
+			expectedStatus: http.StatusInternalServerError,
+			expectedBody:   "Internal Server Error",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			req, err := http.NewRequest(http.MethodGet, "/", nil)
+			if err != nil {
+				t.Fatalf("Failed to create request: %v", err)
+			}
+
+			recorder = httptest.NewRecorder()
+			ErrorHandler(recorder, req, tt.message, tt.statusCode)
+
+			if got := recorder.Code; got != tt.expectedStatus {
+				t.Errorf("Expected status %d, got %d", tt.expectedStatus, got)
+			}
+
+			body, err := io.ReadAll(recorder.Body)
+			if err != nil {
+				t.Fatalf("Failed to read response body: %v", err)
+			}
+
+			if !strings.Contains(string(body), tt.expectedBody) {
+				t.Errorf("Expected body to contain %q, got %q", tt.expectedBody, string(body))
+			}
+		})
 	}
 }
