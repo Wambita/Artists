@@ -62,7 +62,7 @@ go run .
 
 Run tests to ensure the integrity of your application.
 ```bash
-go test - cover ./...
+go test -cover ./...
 ```
 
 ## Contributing
