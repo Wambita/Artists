@@ -25,22 +25,6 @@ func init() {
 			ConcertDates:   []string{"2022-01-01", "2022-02-02"},
 		},
 	}
-
-	// Override the functions to return mock data for tests.
-	locations = func(id string) []string {
-		return []string{"Test Location 1", "Test Location 2"}
-	}
-
-	dates = func(id string) []string {
-		return []string{"2022-01-01", "2022-02-02"}
-	}
-
-	reletions = func(id string) map[string][]string {
-		return map[string][]string{
-			"2022-01-01": {"Test Location 1"},
-			"2022-02-02": {"Test Location 2"},
-		}
-	}
 }
 
 func TestArtistHandler(t *testing.T) {
@@ -144,27 +128,6 @@ func TestRouteHandler(t *testing.T) {
 				t.Errorf("Expected status %v, got %v", tt.expectedStatus, rec.Code)
 			}
 		})
-	}
-}
-
-func TestLocations(t *testing.T) {
-	locations := locations("1")
-	if len(locations) != 2 || locations[0] != "Test Location 1" {
-		t.Errorf("Expected mock locations data, got %v", locations)
-	}
-}
-
-func TestDates(t *testing.T) {
-	dates := dates("1")
-	if len(dates) != 2 || dates[0] != "2022-01-01" {
-		t.Errorf("Expected mock dates data, got %v", dates)
-	}
-}
-
-func TestReletions(t *testing.T) {
-	reletions := reletions("1")
-	if len(reletions) != 2 || reletions["2022-01-01"][0] != "Test Location 1" {
-		t.Errorf("Expected mock relations data, got %v", reletions)
 	}
 }
 
