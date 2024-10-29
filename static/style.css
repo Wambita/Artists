@@ -9,12 +9,77 @@ body {
   color: #e0e0e0;
 }
 
-h1 {
-    text-align: center;
-    color: #4CAF50;
-    font-size: 2.5em;
+/* Header Styles */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
     margin-bottom: 30px;
 }
+
+.h1 {
+    text-align: left;
+    color: #4CAF50;
+    font-size: 3em; /* Smaller title */
+    font-weight: 600;
+    margin: 0;
+    text-decoration: none;
+}
+
+.search-bar-container {
+    position: relative;
+    width: 400px; /* Adjust as needed */
+}
+
+.search-bar {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    border: 2px solid #1ed760;
+    border-radius: 20px;
+    color: #e0e0e0;
+    background: linear-gradient(135deg, #1a2a1d 0%, #0d1f12 100%);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.search-bar::placeholder {
+    font-size: 1rem;
+    color: #2cd335;
+    font-weight: 500;
+}
+
+.search-bar:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 20px rgba(76, 175, 80, 0.3);
+}
+
+/* Suggestions Dropdown */
+.suggestions {
+    margin-top: 5px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #1a2a1d 0%, #0d1f12 100%);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    color: #e0e0e0;
+    max-height: 200px;
+    overflow-y: auto;
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+}
+
+.suggestions li {
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.suggestions li:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
 
 .artist-list {
     display: flex;
@@ -22,6 +87,7 @@ h1 {
     justify-content: center;
 }
 
+/* Artist Card Styles */
 .artist-card {
     background-color: rgba(255, 255, 255, 0.1);
     border-radius: 15px;
@@ -29,25 +95,25 @@ h1 {
     overflow: hidden;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     position: relative;
-    margin: 10px;
-  }
+    margin: 25px;
+}
 
-  .artist-images {
+.artist-images {
     width: 100%;
     height: 250px;
     object-fit: cover;
     transition: transform 0.3s ease;
-  }
+}
 
-  .artist-card:hover   .artist img {
+.artist-card:hover .artist-images {
     transform: scale(1.1);
-  }
+}
 
-  .artist-card:hover {
+.artist-card:hover {
     box-shadow: 0 15px 30px rgba(76, 175, 80, 0.3);
-  }
+}
 
-  .artist-name {
+.artist-name {
     padding: 20px;
     text-align: center;
     font-weight: 600;
@@ -57,79 +123,71 @@ h1 {
     left: 0;
     right: 0;
     transition: all 0.3s ease;
-  }
+}
 
-  .artist-name a {
+.artist-name a {
     color: #4CAF50;
     text-decoration: none;
     transition: color 0.3s ease;
-  }
+}
 
-  .artist-name a:hover {
+.artist-name a:hover {
     color: #66BB6A;
-  }
+}
 
-  .artist-card:hover .artist-name {
+.artist-card:hover .artist-name {
     padding-bottom: 30px;
     background-color: rgba(10, 30, 15, 0.95);
-  }
+}
 
-  @keyframes fadeIn {
+/* Animation for Fade In */
+@keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
-  }
+}
 
-  .artist-card {
+.artist-card {
     animation: fadeIn 0.5s ease forwards;
-  }
-  .content{
+}
+
+/* Content Padding */
+.content {
     padding: 30px;
-  }
+}
 
-  /*Artist page styling*/
-
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 40px 20px;
-  }
-  .artist-profile{
+/* Artist Profile Styles */
+.artist-profile {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: flex-start;
     gap: 40px;
-  }
+}
 
-  .artist-image-container{
+.artist-image-container {
     flex: 1;
     max-width: 400px;
-  }
+}
 
-  .artist-image{
+.artist-image {
     width: 100%;
     height: auto;
     border-radius: 50%;
-    border:2px solid #1ed760 ;
+    border: 2px solid #1ed760;
     box-shadow: 0 15px 30px rgba(76, 175, 80, 0.3);
-    transition: all 0.3 ease 
-  }
+    transition: all 0.3s ease;
+}
 
-  .artist-image:hover{
+.artist-image:hover {
     transform: scale(1.05);
     box-shadow: 0 15px 30px rgba(76, 175, 80, 0.3);
-  }
+}
 
-  .artist-info{
-    flex:2;
+.artist-info {
+    flex: 2;
     max-width: 600px;
-  }
+}
 
-  h1{
-    font-size: 3.4rem;
-    margin-bottom: 10px;
-    color:#4CAF50;
-  }
 .artist-genre {
     font-size: 1.2rem;
     color: #66BB6A;
@@ -137,14 +195,14 @@ h1 {
     font-weight: 600;
 }
 
-.section-title{
-    font-size:2rem;
+.section-title {
+    font-size: 2rem;
     margin: 20px 0 20px;
     text-align: center;
     color: #4CAF50;
 }
 
-.member-list, .date-list{
+.member-list, .date-list {
     list-style-type: none;
     padding: 0;
     display: grid;
@@ -152,20 +210,20 @@ h1 {
     gap: 20px;
 }
 
-.member-list li, .date-list li{
-   background-color: rgba(255, 255, 255, 0.05);
-   padding: 20px;
-   border-radius: 10px;
-   transition: all 0.3 ease;
-   backdrop-filter: blur(5px);
+.member-list li, .date-list li {
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
 }
 
-.member-list li:hover, .date-list li:hover{
-  background-color: rgba(255, 255, 255, 0.1);
-  transform: translateY(-5px);
+.member-list li:hover, .date-list li:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-5px);
 }
 
-.date-list li{
+.date-list li {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -181,9 +239,10 @@ h1 {
     font-size: 0.9rem;
 }
 
-.button-sec{
+.button-sec {
     margin: 40px 0 20px;
 }
+
 .button {
     background-color: #1DB954;
     color: white;
@@ -195,76 +254,64 @@ h1 {
     transition: background-color 0.3s, transform 0.3s;
     text-decoration: none;
 }
+
 .button:hover {
     background-color: #1ed760;
     transform: scale(1.05);
 }
 
-/*view selection*/
+/* View Selection Styles */
 .view-selection {
-  background: linear-gradient(135deg, #1a2a1d 100%, #0d1f12 100%);
-  border-radius: 10px;
-  padding: 20px;
-  margin: 40px auto; /* Centered horizontally */
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  text-align: center;
-  backdrop-filter: blur(5px);
-  transition: background-color 0.3s, color 0.3s;
+    background: linear-gradient(135deg, #1a2a1d 100%, #0d1f12 100%);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 40px auto; /* Centered horizontally */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    backdrop-filter: blur(5px);
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .view-selection label {
-  font-size: 1.5rem;
-  color: #66BB6A;
-  margin-right: 10px;
+    font-size: 1.5rem;
+    color: #66BB6A;
+    margin-right: 10px;
 }
 
 .view-selection select {
-  font-size: 1.2rem;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  background: linear-gradient(135deg, #1a2a1d 0%, #0d1f12 100%);
-  color: #e0e0e0;
-  transition: background-color 0.3s, color 0.3s;
+    font-size: 1.2rem;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: linear-gradient(135deg, #1a2a1d 0%, #0d1f12 100%);
+    color: #e0e0e0;
+    transition: background-color 0.3s, color 0.3s;
 }
-
 
 .view-selection select:hover {
-  background-color: rgba(255, 255, 255, 0.3);
-  color: #66BB6A;;
+    background-color: rgba(255, 255, 255, 0.3);
+    color: #66BB6A;
 }
+
 .view-selection:hover {
-  background-color: rgba(255, 255, 255, 0.137);
-  color: #4CAF50;
+    background-color: rgba(255, 255, 255, 0.137);
+    color: #4CAF50;
 }
 
-
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .artist-profile, .members, .dates {
-    animation: fadeIn 0.5s ease forwards;
-  }
-
-
-  /*Responsive design*/
-  @media(max-width: 768px){
-    .artist-profile{
+/* Responsive Design */
+@media(max-width: 768px) {
+    .artist-profile {
         flex-direction: column;
         align-items: center;
     }
-    .artist-image-container, .artist-info{
+    .artist-image-container, .artist-info {
         max-width: 100%;
     }
 
-    h1{
+    h1 {
         font-size: 2.5rem;
     }
-    .section-title{
+    .section-title {
         font-size: 1.8rem;
     }
-
-  }
+}
