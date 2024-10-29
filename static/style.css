@@ -296,6 +296,17 @@ color: #4CAF50;
 }
 /*Responsive design*/
 @media(max-width: 768px){
+  .header {
+    flex-direction: column; /* Stack title and search bar */
+    align-items: center; /* Center alignment */
+    text-align: center; /* Center text */
+}
+
+.search-bar-container {
+    margin-top: 10px; /* Space below the title */
+    width: 70%; /* Full width on small screens */
+}
+
   .artist-profile{
       flex-direction: column;
       align-items: center;
