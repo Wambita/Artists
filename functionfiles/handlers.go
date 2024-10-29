@@ -36,7 +36,7 @@ func RouteHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Println(r.URL.Path)
+
 	// Use switch case to handle specific routes
 
 	switch r.URL.Path {
