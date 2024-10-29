@@ -3,6 +3,7 @@ package groupie_tracker
 import (
 	"fmt"
 	"net/http"
+	"path/filepath"
 	"strconv"
 	"strings"
 )
@@ -103,7 +104,7 @@ func ArtistHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Artists[id-1]
 	if len(Artists[id-1].DatesLocations) == 0 {
-		if err := fetchData(RelationURL + artistID, &reletions); err != nil{
+		if err := fetchData(RelationURL+artistID, &reletions); err != nil {
 			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 			return
 		}
@@ -111,7 +112,7 @@ func ArtistHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if len(Artists[id-1].Locations) == 0 {
-		if err := fetchData(LocationsURL + artistID, &locations); err != nil{
+		if err := fetchData(LocationsURL+artistID, &locations); err != nil {
 			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 			return
 		}
@@ -119,7 +120,7 @@ func ArtistHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if len(Artists[id-1].ConcertDates) == 0 {
-		if err := fetchData(DatesURL + artistID, &dates); err != nil{
+		if err := fetchData(DatesURL+artistID, &dates); err != nil {
 			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 			return
 		}
@@ -151,4 +152,16 @@ func ErrorHandler(w http.ResponseWriter, r *http.Request, message string, status
 	if err != nil {
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 	}
+}
+
+func StaticFileHandler(w http.ResponseWriter, r *http.Request) {
+	// Prevent direct access to the static directory
+	if r.URL.Path == "/static/" || r.URL.Path[len("/static/"):] == "" {
+		ErrorHandler(w, r, "Access denied", http.StatusForbidden)
+		return
+	}
+
+	// Serve the requested static file
+	fullPath := filepath.Join("static", r.URL.Path[len("/static/"):])
+	http.ServeFile(w, r, fullPath)
 }
