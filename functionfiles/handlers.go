@@ -108,7 +108,7 @@ func ArtistHandler(w http.ResponseWriter, r *http.Request) {
 
 	if len(Artists[id-1].Locations) == 0 {
 		if err := fetchData(LocationsURL+artistID, &locations); err != nil {
-			ErrorHandler(w,r, "Internal Server Error", http.StatusInternalServerError)
+			ErrorHandler(w, r, "Internal Server Error", http.StatusInternalServerError)
 			return
 		}
 		Artists[id-1].Locations = locations.Locations
@@ -116,7 +116,7 @@ func ArtistHandler(w http.ResponseWriter, r *http.Request) {
 
 	if len(Artists[id-1].ConcertDates) == 0 {
 		if err := fetchData(DatesURL+artistID, &dates); err != nil {
-			ErrorHandler(w,r, "Internal Server Error", http.StatusInternalServerError)
+			ErrorHandler(w, r, "Internal Server Error", http.StatusInternalServerError)
 			return
 		}
 		Artists[id-1].ConcertDates = dates.ConcertDates
@@ -126,7 +126,7 @@ func ArtistHandler(w http.ResponseWriter, r *http.Request) {
 	err1 := Templates.ExecuteTemplate(w, "artist.html", Artists[id-1])
 
 	if err1 != nil {
-		ErrorHandler(w,r, "Internal Server Error", http.StatusInternalServerError)
+		ErrorHandler(w, r, "Internal Server Error", http.StatusInternalServerError)
 	}
 }
 
