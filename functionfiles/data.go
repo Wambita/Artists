@@ -27,7 +27,7 @@ func fetchData(url string, target interface{}) error {
 	}
 	defer resp.Body.Close()
 	return json.NewDecoder(resp.Body).Decode(target)
-	}
+}
 
 // loadData fetch data concurrently from all apis
 func LoadData() {

@@ -8,17 +8,17 @@ import (
 
 var (
 	Templates *template.Template
-	once sync.Once //ensures initialization only happens once
+	once      sync.Once //ensures initialization only happens once
 )
 
 // InitializeTemplates initializes the template variable, parsing all HTML files in the templates directory.
 func InitializeTemplates() {
-	once.Do(func (){
-	var err error
-	Templates, err = template.ParseGlob("templates/*.html")
-	if err != nil {
-		log.Fatalf("Error parsing templates: %v", err)
-	}
+	once.Do(func() {
+		var err error
+		Templates, err = template.ParseGlob("templates/*.html")
+		if err != nil {
+			log.Fatalf("Error parsing templates: %v", err)
+		}
 
-})
+	})
 }

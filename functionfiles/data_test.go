@@ -29,7 +29,6 @@ var mockLocationsResponse = struct {
 // Mock response for dates
 var mockDatesResponse = []string{"2024-10-30", "2024-11-05"}
 
-
 // Test LoadData
 func TestLoadData(t *testing.T) {
 	// Setup a mock server for artists
@@ -47,7 +46,6 @@ func TestLoadData(t *testing.T) {
 		t.Fatalf("Expected %d artists, got %d", len(mockArtistsResponse), len(Artists))
 	}
 }
-
 
 func TestFetchData(t *testing.T) {
 	// Set up a test server
@@ -74,10 +72,10 @@ func TestFetchData(t *testing.T) {
 	defer ts.Close()
 
 	tests := []struct {
-		name       string
-		url        string
-		target     interface{}
-		wantErr    bool
+		name    string
+		url     string
+		target  interface{}
+		wantErr bool
 	}{
 		{
 			name:    "Fetch Artists",
@@ -127,7 +125,7 @@ func TestFetchData(t *testing.T) {
 						if len(artists) != len(mockArtistsResponse) {
 							t.Errorf("Expected %d artists, got %d", len(mockArtistsResponse), len(artists))
 						}
-						
+
 						for i, artist := range artists {
 							if artist != mockArtistsResponse[i] {
 								t.Errorf("Expected artist %v, got %v", mockArtistsResponse[i], artists[i])

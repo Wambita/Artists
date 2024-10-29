@@ -131,7 +131,6 @@ func TestRouteHandler(t *testing.T) {
 	}
 }
 
-
 func TestHomeHandler(t *testing.T) {
 	// Create a response recorder to capture the response.
 	recorder := httptest.NewRecorder()
@@ -179,8 +178,6 @@ func TestHomeHandler(t *testing.T) {
 		})
 	}
 }
-
-
 
 func TestErrorHandler(t *testing.T) {
 	recorder := httptest.NewRecorder()
