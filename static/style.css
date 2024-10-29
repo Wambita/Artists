@@ -155,163 +155,158 @@ body {
     padding: 30px;
 }
 
-/* Artist Profile Styles */
-.artist-profile {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 40px;
+ /*Artist page styling*/
+ .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
 }
-
-.artist-image-container {
-    flex: 1;
-    max-width: 400px;
+.artist-profile{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
 }
-
-.artist-image {
-    width: 100%;
-    height: auto;
-    border-radius: 50%;
-    border: 2px solid #1ed760;
-    box-shadow: 0 15px 30px rgba(76, 175, 80, 0.3);
-    transition: all 0.3s ease;
+.artist-image-container{
+  flex: 1;
+  max-width: 400px;
 }
-
-.artist-image:hover {
-    transform: scale(1.05);
-    box-shadow: 0 15px 30px rgba(76, 175, 80, 0.3);
+.artist-image{
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+  border:2px solid #1ed760 ;
+  box-shadow: 0 15px 30px rgba(76, 175, 80, 0.3);
+  transition: all 0.3 ease 
 }
-
-.artist-info {
-    flex: 2;
-    max-width: 600px;
+.artist-image:hover{
+  transform: scale(1.05);
+  box-shadow: 0 15px 30px rgba(76, 175, 80, 0.3);
 }
-
+.artist-info{
+  flex:2;
+  max-width: 600px;
+}
+h1{
+  font-size: 3.4rem;
+  margin-bottom: 10px;
+  color:#4CAF50;
+}
 .artist-genre {
-    font-size: 1.2rem;
-    color: #66BB6A;
-    margin-bottom: 20px;
-    font-weight: 600;
+  font-size: 1.2rem;
+  color: #66BB6A;
+  margin-bottom: 20px;
+  font-weight: 600;
 }
-
-.section-title {
-    font-size: 2rem;
-    margin: 20px 0 20px;
-    text-align: center;
-    color: #4CAF50;
+.section-title{
+  font-size:2rem;
+  margin: 20px 0 20px;
+  text-align: center;
+  color: #4CAF50;
 }
-
-.member-list, .date-list {
-    list-style-type: none;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
+.member-list, .date-list{
+  list-style-type: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
 }
-
-.member-list li, .date-list li {
-    background-color: rgba(255, 255, 255, 0.05);
-    padding: 20px;
-    border-radius: 10px;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(5px);
+.member-list li, .date-list li{
+ background-color: rgba(255, 255, 255, 0.05);
+ padding: 20px;
+ border-radius: 10px;
+ transition: all 0.3 ease;
+ backdrop-filter: blur(5px);
 }
-
-.member-list li:hover, .date-list li:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    transform: translateY(-5px);
+.member-list li:hover, .date-list li:hover{
+background-color: rgba(255, 255, 255, 0.1);
+transform: translateY(-5px);
 }
-
-.date-list li {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+.date-list li{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
-
 .date-list .location {
-    font-weight: bold;
-    margin-bottom: 10px;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
-
 .date-list .date {
-    color: #66BB6A;
-    font-size: 0.9rem;
+  color: #66BB6A;
+  font-size: 0.9rem;
 }
-
-.button-sec {
-    margin: 40px 0 20px;
+.button-sec{
+  margin: 40px 0 20px;
 }
-
 .button {
-    background-color: #1DB954;
-    color: white;
-    border: none;
-    padding: 15px 30px;
-    font-size: 1.1em;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
-    text-decoration: none;
+  background-color: #1DB954;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  font-size: 1.1em;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  text-decoration: none;
 }
-
 .button:hover {
-    background-color: #1ed760;
-    transform: scale(1.05);
+  background-color: #1ed760;
+  transform: scale(1.05);
 }
-
-/* View Selection Styles */
+/*view selection*/
 .view-selection {
-    background: linear-gradient(135deg, #1a2a1d 100%, #0d1f12 100%);
-    border-radius: 10px;
-    padding: 20px;
-    margin: 40px auto; /* Centered horizontally */
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    backdrop-filter: blur(5px);
-    transition: background-color 0.3s, color 0.3s;
+background: linear-gradient(135deg, #1a2a1d 100%, #0d1f12 100%);
+border-radius: 10px;
+padding: 20px;
+margin: 40px auto; /* Centered horizontally */
+box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+text-align: center;
+backdrop-filter: blur(5px);
+transition: background-color 0.3s, color 0.3s;
 }
-
 .view-selection label {
-    font-size: 1.5rem;
-    color: #66BB6A;
-    margin-right: 10px;
+font-size: 1.5rem;
+color: #66BB6A;
+margin-right: 10px;
 }
-
 .view-selection select {
-    font-size: 1.2rem;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    background: linear-gradient(135deg, #1a2a1d 0%, #0d1f12 100%);
-    color: #e0e0e0;
-    transition: background-color 0.3s, color 0.3s;
+font-size: 1.2rem;
+padding: 10px;
+border: none;
+border-radius: 5px;
+background: linear-gradient(135deg, #1a2a1d 0%, #0d1f12 100%);
+color: #e0e0e0;
+transition: background-color 0.3s, color 0.3s;
 }
-
 .view-selection select:hover {
-    background-color: rgba(255, 255, 255, 0.3);
-    color: #66BB6A;
+background-color: rgba(255, 255, 255, 0.3);
+color: #66BB6A;;
 }
-
 .view-selection:hover {
-    background-color: rgba(255, 255, 255, 0.137);
-    color: #4CAF50;
+background-color: rgba(255, 255, 255, 0.137);
+color: #4CAF50;
 }
-
-/* Responsive Design */
-@media(max-width: 768px) {
-    .artist-profile {
-        flex-direction: column;
-        align-items: center;
-    }
-    .artist-image-container, .artist-info {
-        max-width: 100%;
-    }
-
-    h1 {
-        font-size: 2.5rem;
-    }
-    .section-title {
-        font-size: 1.8rem;
-    }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.artist-profile, .members, .dates {
+  animation: fadeIn 0.5s ease forwards;
+}
+/*Responsive design*/
+@media(max-width: 768px){
+  .artist-profile{
+      flex-direction: column;
+      align-items: center;
+  }
+  .artist-image-container, .artist-info{
+      max-width: 100%;
+  }
+  h1{
+      font-size: 2.5rem;
+  }
+  .section-title{
+      font-size: 1.8rem;
+  }
 }
