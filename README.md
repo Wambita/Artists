@@ -1,8 +1,8 @@
-# groupie-tracker
+# groupie-tracker-visualizations
 
 ## Overview
 
-**Groupie Tracker** is a web application designed to receive, manipulate, and display data from a provided API related to music artists, their concert locations, and dates. This project focuses on creating an engaging user experience through various data visualizations while ensuring robust client-server communication.
+**Groupie Tracker Visualizations** is a web application designed to receive, manipulate, and display data from a provided API related to music artists, their concert locations, and dates. This project focuses on creating an engaging user experience through various data visualizations while ensuring robust client-server communication.
 
 ## Features
 
@@ -39,7 +39,7 @@ Basic understanding of HTML/CSS/JAVASCRIPT for front-end development.
 * Clone the Repository:
 ```bash
 
-git clone https://learn.zone01kisumu.ke/git/shfana/groupie-tracker
+git clone https://learn.zone01kisumu.ke/git/shfana/groupie-tracker-visualizations
 
 cd groupie-tracker
 ```
