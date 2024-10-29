@@ -17,9 +17,9 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 
 	// pass artists slice to the template
 	err := Templates.ExecuteTemplate(w, "index.html", Artists)
-	// w.WriteHeader(http.StatusOK)
+	w.WriteHeader(http.StatusOK)
 	if err != nil {
-		http.Error(w, "Internal  Server Error", http.StatusInternalServerError)
+		ErrorHandler(w, r, "Internal  Server Error", http.StatusInternalServerError)
 	}
 }
 
@@ -100,7 +100,7 @@ func ArtistHandler(w http.ResponseWriter, r *http.Request) {
 	// Artists[id-1]
 	if len(Artists[id-1].DatesLocations) == 0 {
 		if err := fetchData(RelationURL+artistID, &reletions); err != nil {
-			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+			ErrorHandler(w, r, "Internal Server Error", http.StatusInternalServerError)
 			return
 		}
 		Artists[id-1].DatesLocations = reletions.DatesLocations
@@ -108,7 +108,7 @@ func ArtistHandler(w http.ResponseWriter, r *http.Request) {
 
 	if len(Artists[id-1].Locations) == 0 {
 		if err := fetchData(LocationsURL+artistID, &locations); err != nil {
-			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+			ErrorHandler(w,r, "Internal Server Error", http.StatusInternalServerError)
 			return
 		}
 		Artists[id-1].Locations = locations.Locations
@@ -116,7 +116,7 @@ func ArtistHandler(w http.ResponseWriter, r *http.Request) {
 
 	if len(Artists[id-1].ConcertDates) == 0 {
 		if err := fetchData(DatesURL+artistID, &dates); err != nil {
-			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+			ErrorHandler(w,r, "Internal Server Error", http.StatusInternalServerError)
 			return
 		}
 		Artists[id-1].ConcertDates = dates.ConcertDates
@@ -126,7 +126,7 @@ func ArtistHandler(w http.ResponseWriter, r *http.Request) {
 	err1 := Templates.ExecuteTemplate(w, "artist.html", Artists[id-1])
 
 	if err1 != nil {
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		ErrorHandler(w,r, "Internal Server Error", http.StatusInternalServerError)
 	}
 }
 
@@ -145,7 +145,7 @@ func ErrorHandler(w http.ResponseWriter, r *http.Request, message string, status
 	// render the error page template
 	err := Templates.ExecuteTemplate(w, "error.html", errorPage)
 	if err != nil {
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		ErrorHandler(w, r, "Internal Server Error", http.StatusInternalServerError)
 	}
 }
 
