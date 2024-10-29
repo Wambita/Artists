@@ -1,12 +1,8 @@
 package groupie_tracker
 
 import (
-	"encoding/json"
 	"fmt"
-	"io/ioutil"
-	"log"
 	"net/http"
-	"os"
 	"path/filepath"
 	"strconv"
 	"strings"
@@ -21,6 +17,8 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 
 	// pass artists slice to the template
 	err := Templates.ExecuteTemplate(w, "index.html", Artists)
+	w.WriteHeader(http.StatusOK)
+
 	if err != nil {
 		http.Error(w, "Internal  Server Error", http.StatusInternalServerError)
 	}
@@ -34,7 +32,7 @@ func RouteHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if strings.HasPrefix(r.URL.Path, "/static/") {
-		http.Error(w, "Access denied", http.StatusForbidden)
+		ErrorHandler(w, r, "Access denied", http.StatusForbidden)
 		return
 	}
 
@@ -74,22 +72,55 @@ func ArtistHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	// Parse the artist ID
 	id, err := strconv.Atoi(artistID)
-	if err != nil || id < 1 || id > 52 {
+	if err != nil || id < 1 || id > len(Artists) {
 		ErrorHandler(w, r, "Invalid Artist ID. It must be a number between 0 and 52.", http.StatusBadRequest)
 		return
 	}
 
+	// Define a struct for the expected data structure
+	type datesLocations struct {
+		DatesLocations map[string][]string `json:"datesLocations"`
+	}
+
+	// Define a struct for the expected data structure
+	type concertDates struct {
+		ConcertDates []string `json:"dates"`
+	}
+
+	// Define a struct for the expected data structure
+	type Locations struct {
+		Locations []string `json:"locations"`
+	}
+
+	var reletions datesLocations
+
+	var locations Locations
+
+	var dates concertDates
+
 	// Artists[id-1]
 	if len(Artists[id-1].DatesLocations) == 0 {
-		Artists[id-1].DatesLocations = reletions(artistID)
+		if err := fetchData(RelationURL+artistID, &reletions); err != nil {
+			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+			return
+		}
+		Artists[id-1].DatesLocations = reletions.DatesLocations
 	}
 
 	if len(Artists[id-1].Locations) == 0 {
-		Artists[id-1].Locations = locations(artistID)
+		if err := fetchData(LocationsURL+artistID, &locations); err != nil {
+			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+			return
+		}
+		Artists[id-1].Locations = locations.Locations
 	}
 
 	if len(Artists[id-1].ConcertDates) == 0 {
-		Artists[id-1].ConcertDates = dates(artistID)
+		if err := fetchData(DatesURL+artistID, &dates); err != nil {
+			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+			return
+		}
+		Artists[id-1].ConcertDates = dates.ConcertDates
 	}
 
 	// pass the artist into the template
@@ -98,99 +129,6 @@ func ArtistHandler(w http.ResponseWriter, r *http.Request) {
 	if err1 != nil {
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 	}
-}
-
-// function for getting locations
-func locations(id string) []string {
-	url := "https://groupietrackers.herokuapp.com/api/locations/" + id
-
-	resp, err1 := http.Get(url)
-	if err1 != nil {
-		log.Fatal(err1)
-	}
-	defer resp.Body.Close()
-
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		fmt.Println("Error reading response:", err)
-	}
-
-	// Define a struct for the expected data structure
-	type ApiResponse struct {
-		Locations []string `json:"locations"`
-	}
-
-	// Unmarshal into the struct
-	var response ApiResponse
-	err = json.Unmarshal(body, &response)
-	if err != nil {
-		log.Fatal("Error unmarshalling:", err)
-	}
-
-	// return the DatesLocations map
-	return response.Locations
-}
-
-// function for getting  dates
-func dates(id string) []string {
-	url := "https://groupietrackers.herokuapp.com/api/dates/" + id
-
-	resp, err1 := http.Get(url)
-	if err1 != nil {
-		log.Fatal(err1)
-	}
-	defer resp.Body.Close()
-
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		fmt.Println("Error reading response:", err)
-	}
-
-	// Define a struct for the expected data structure
-	type ApiResponse struct {
-		ConcertDates []string `json:"dates"`
-	}
-
-	// Unmarshal into the struct
-	var response ApiResponse
-	err = json.Unmarshal(body, &response)
-	if err != nil {
-		log.Fatal("Error unmarshalling:", err)
-	}
-
-	// return the DatesLocations map
-	return response.ConcertDates
-}
-
-// function for getting reletions
-func reletions(id string) map[string][]string {
-	url := "https://groupietrackers.herokuapp.com/api/relation/" + id
-
-	resp, err1 := http.Get(url)
-	if err1 != nil {
-		log.Fatal(err1)
-	}
-	defer resp.Body.Close()
-
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		fmt.Println("Error reading response:", err)
-	}
-
-	// Define a struct for the expected data structure
-	type ApiResponse struct {
-		DatesLocations map[string][]string `json:"datesLocations"`
-	}
-
-	// Unmarshal into the struct
-	var response ApiResponse
-	err = json.Unmarshal(body, &response)
-	if err != nil {
-		log.Fatal("Error unmarshalling:", err)
-	}
-
-	// return the DatesLocations map
-	return response.DatesLocations
 }
 
 // ierror page handler
@@ -221,11 +159,5 @@ func StaticFileHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Serve the requested static file
 	fullPath := filepath.Join("static", r.URL.Path[len("/static/"):])
-
-	if _, err3 := os.Stat(fullPath); os.IsNotExist(err3) {
-		fmt.Printf("error: %v\n", err3)
-		return
-	}
-
 	http.ServeFile(w, r, fullPath)
 }

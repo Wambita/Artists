@@ -24,6 +24,7 @@ func main() {
 
 	// Set routes
 	http.HandleFunc("/", groupie_tracker.RouteHandler)
+	http.HandleFunc("/artist", groupie_tracker.ArtistHandler)
 
 	// Serve static files
 	http.HandleFunc("/static/", groupie_tracker.StaticFileHandler)
