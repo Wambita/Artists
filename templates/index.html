@@ -7,7 +7,21 @@
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <h1>Groupie Trackers</h1>
+      <!-- Header section for title and search bar -->
+    <header class="header">
+        <a class="h1" href="/">Groupie Tracker</a>
+        <div class="search-bar-container">
+            <input 
+                type="text" 
+                class="search-bar" 
+                id="search-bar" 
+                placeholder="Search for an artist, member, or location..."
+                oninput="performSearch()"
+            >
+            <ul id="suggestions" class="suggestions hidden"></ul>
+        </div>
+    </header>
+
     <div class="artist-list">
         {{range .}}
             <div class="artist-card">
