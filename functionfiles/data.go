@@ -7,12 +7,12 @@ import (
 )
 
 // Api  urls
-var (
-	artistsURL   = "https://groupietrackers.herokuapp.com/api/artists"
-	LocationsURL = "https://groupietrackers.herokuapp.com/api/locations/"
-	DatesURL     = "https://groupietrackers.herokuapp.com/api/dates/"
-	RelationURL  = "https://groupietrackers.herokuapp.com/api/relation/"
-)
+// var (
+	var artistsURL   = "https://groupietrackers.herokuapp.com/api/artists"
+	var LocationsURL = "https://groupietrackers.herokuapp.com/api/locations/"
+	var DatesURL     = "https://groupietrackers.herokuapp.com/api/dates/"
+	var RelationURL  = "https://groupietrackers.herokuapp.com/api/relation/"
+// )
 
 // gloabl vars for storing data
 var (
