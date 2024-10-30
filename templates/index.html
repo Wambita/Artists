@@ -36,38 +36,28 @@
     </div>
     <script>
 
-async function performSearch() {
-    const query = document.getElementById('search-bar').value.trim();
-    const suggestionsList = document.getElementById('suggestions-list');
+function performSearch() {
+    const query = document.getElementById("search-bar").value.toLowerCase();
+    fetch(`/search?q=${query}`)  // Send the fetch request with the search query
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return response.json(); // Parse the JSON from the response
+        })
+        .then(data => displaySuggestions(data)) // Use the suggestions to update the UI
+        .catch(error => console.error("Error fetching suggestions:", error)); // Handle errors
+}
 
-    if (!query) {
-        suggestionsList.classList.add('hidden');
-        return;
-    }
-
-    try {
-        const response = await fetch(`/search?q=${encodeURIComponent(query)}`);
-        const suggestions = await response.json();
-
-        // Clear previous suggestions
-        suggestionsList.innerHTML = '';
-
-        if (suggestions.length === 0) {
-            suggestionsList.classList.add('hidden');
-            return;
-        }
-
-        // Display new suggestions
-        suggestions.forEach(suggestion => {
-            const listItem = document.createElement('li');
-            listItem.textContent = `${suggestion.Name} - ${suggestion.Type}`;
-            suggestionsList.appendChild(listItem);
-        });
-
-        suggestionsList.classList.remove('hidden');
-    } catch (error) {
-        console.error("Error fetching suggestions:", error);
-    }
+function displaySuggestions(suggestions) {
+    const suggestionList = document.getElementById("suggestions");
+    suggestionList.innerHTML = ''; // Clear previous suggestions
+    suggestions.forEach(suggestion => {
+        const listItem = document.createElement("li");
+        listItem.textContent = `${suggestion.name} - ${suggestion.type}`;
+        suggestionList.appendChild(listItem);
+    });
+    suggestionList.classList.remove("hidden"); // Show suggestions
 }
     </script>
  </body>
