@@ -34,5 +34,27 @@
             </div>
         {{end}}
     </div>
+    <script>
+        function performSearch() {
+            const query = document.getElementById("search-bar").value;
+            const suggestionsList = document.getElementById("suggestions");
+            suggestionsList.innerHTML = '';
+    
+            if (query.length > 0) {
+                fetch(`/search?query=${query}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        data.forEach(item => {
+                            const suggestionItem = document.createElement("li");
+                            suggestionItem.textContent = `${item.Name} - ${item.Type}`;
+                            suggestionsList.appendChild(suggestionItem);
+                        });
+                        suggestionsList.classList.remove("hidden");
+                    });
+            } else {
+                suggestionsList.classList.add("hidden");
+            }
+        }
+    </script>
 </body>
 </html>
