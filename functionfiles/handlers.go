@@ -1,6 +1,7 @@
 package groupie_tracker
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"path/filepath"
@@ -42,6 +43,8 @@ func RouteHandler(w http.ResponseWriter, r *http.Request) {
 		HomeHandler(w, r)
 	case "/artist":
 		ArtistHandler(w, r)
+	case "/search":
+		SearchHandler(w, r)
 	default:
 		ErrorHandler(w, r, fmt.Sprintf("The Requested path %s does not exist", r.URL.Path), http.StatusNotFound)
 	}
@@ -159,4 +162,44 @@ func StaticFileHandler(w http.ResponseWriter, r *http.Request) {
 	// Serve the requested static file
 	fullPath := filepath.Join("static", r.URL.Path[len("/static/"):])
 	http.ServeFile(w, r, fullPath)
+}
+
+type Suggestion struct {
+	Name string `json:"name"`
+	Type string `json:"type"`
+}
+
+func SearchHandler(w http.ResponseWriter, r *http.Request) {
+	query := r.URL.Query().Get("q")
+	query = strings.ToLower(query) // Case-insensitive search
+	var suggestions []Suggestion
+
+	for _, artist := range Artists {
+		// Search by artist/band name
+		if strings.Contains(strings.ToLower(artist.Name), query) {
+			suggestions = append(suggestions, Suggestion{Name: artist.Name, Type: "artist/band"})
+		}
+		// Search by member names
+		for _, member := range artist.Members {
+			if strings.Contains(strings.ToLower(member), query) {
+				suggestions = append(suggestions, Suggestion{Name: member, Type: "member"})
+			}
+		}
+		// Search by locations
+		for _, location := range artist.Locations {
+			if strings.Contains(strings.ToLower(location), query) {
+				suggestions = append(suggestions, Suggestion{Name: location, Type: "location"})
+			}
+		}
+		// Search by creation and first album dates (converting to strings for matching)
+		if strings.Contains(fmt.Sprint(artist.Year), query) {
+			suggestions = append(suggestions, Suggestion{Name: artist.Name, Type: "creation date"})
+		}
+		if strings.Contains(fmt.Sprint(artist.Album), query) {
+			suggestions = append(suggestions, Suggestion{Name: artist.Name, Type: "first album date"})
+		}
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(suggestions)
 }
