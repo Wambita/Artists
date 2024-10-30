@@ -165,6 +165,7 @@ func StaticFileHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 type Suggestion struct {
+	ID   int    `json:"id"`
 	Name string `json:"name"`
 	Type string `json:"type"`
 }
@@ -177,26 +178,26 @@ func SearchHandler(w http.ResponseWriter, r *http.Request) {
 	for _, artist := range Artists {
 		// Search by artist/band name
 		if strings.Contains(strings.ToLower(artist.Name), query) {
-			suggestions = append(suggestions, Suggestion{Name: artist.Name, Type: "artist/band"})
+			suggestions = append(suggestions, Suggestion{ID: artist.ID, Name: artist.Name, Type: "artist/band"})
 		}
 		// Search by member names
 		for _, member := range artist.Members {
 			if strings.Contains(strings.ToLower(member), query) {
-				suggestions = append(suggestions, Suggestion{Name: member, Type: "member"})
+				suggestions = append(suggestions, Suggestion{ID: artist.ID, Name: member, Type: "member"})
 			}
 		}
 		// Search by locations
 		for _, location := range artist.Locations {
 			if strings.Contains(strings.ToLower(location), query) {
-				suggestions = append(suggestions, Suggestion{Name: location, Type: "location"})
+				suggestions = append(suggestions, Suggestion{ID: artist.ID, Name: location, Type: "location"})
 			}
 		}
 		// Search by creation and first album dates (converting to strings for matching)
 		if strings.Contains(fmt.Sprint(artist.Year), query) {
-			suggestions = append(suggestions, Suggestion{Name: artist.Name, Type: "creation date"})
+			suggestions = append(suggestions, Suggestion{ID: artist.ID, Name: artist.Name, Type: "creation date"})
 		}
 		if strings.Contains(fmt.Sprint(artist.Album), query) {
-			suggestions = append(suggestions, Suggestion{Name: artist.Name, Type: "first album date"})
+			suggestions = append(suggestions, Suggestion{ID: artist.ID, Name: artist.Name, Type: "first album date"})
 		}
 	}
 
