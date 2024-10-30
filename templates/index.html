@@ -50,14 +50,27 @@ function performSearch() {
 }
 
 function displaySuggestions(suggestions) {
-    const suggestionList = document.getElementById("suggestions");
-    suggestionList.innerHTML = ''; // Clear previous suggestions
+    const suggestionsList = document.getElementById("suggestions");
+    suggestionsList.innerHTML = ""; // Clear previous suggestions
+
     suggestions.forEach(suggestion => {
+        // Create a list item
         const listItem = document.createElement("li");
-        listItem.textContent = `${suggestion.name} - ${suggestion.type}`;
-        suggestionList.appendChild(listItem);
+        
+        // Create a clickable link
+        const link = document.createElement("a");
+        link.href = `/artist?id=${suggestion.id}`; // Use the ID to load artist info   
+        link.textContent = `${suggestion.name} - ${suggestion.type}`;
+        link.onclick = function (event) {
+            event.preventDefault(); // Prevent default anchor behavior
+            window.location.href = link.href; // Redirect to the artist details page
+        };
+
+        listItem.appendChild(link);
+        suggestionsList.appendChild(listItem);
     });
-    suggestionList.classList.remove("hidden"); // Show suggestions
+
+    suggestionsList.classList.remove("hidden"); // Show the suggestions list
 }
     </script>
  </body>
