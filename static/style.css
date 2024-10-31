@@ -57,28 +57,24 @@ body {
 }
 
 /* Suggestions Dropdown */
-.suggestions {
-    margin-top: 5px;
-    border-radius: 10px;
-    background: linear-gradient(135deg, #1a2a1d 0%, #0d1f12 100%);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    color: #e0e0e0;
-    max-height: 200px;
-    overflow-y: auto;
-    position: absolute;
-    width: 100%;
-    z-index: 1;
+.suggestion-container {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ddd;
+  max-height: 200px;
+  overflow-y: auto;
+  width: 100%;
 }
 
-.suggestions li {
-    padding: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+.suggestion-item {
+  padding: 8px;
+  cursor: pointer;
 }
 
-.suggestions li:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+.suggestion-item:hover {
+  background-color: #f0f0f0;
 }
+
 
 
 .artist-list {
