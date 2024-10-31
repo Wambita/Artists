@@ -15,11 +15,10 @@
                 type="text" 
                 class="search-bar" 
                 id="search-bar" 
-                placeholder="Search for an artist, member, or location..."
-                oninput="performSearch()"
+                placeholder="Search for an artist, member, date, year  or location..."
+
             >
-            <ul id="suggestions" class="suggestions hidden"></ul>
-        </div>
+            <div id="suggestions" class="suggestion-container"></div>        </div>
     </header>
 
     <div class="artist-list">
@@ -73,5 +72,6 @@ function displaySuggestions(suggestions) {
     suggestionsList.classList.remove("hidden"); // Show the suggestions list
 }
     </script>
+    <script src="/static/script.js"></script> <!-- Load the JavaScript file for search functionality -->
  </body>
 </html>
