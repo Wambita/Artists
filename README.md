@@ -1,4 +1,4 @@
-# groupie-tracker-visualizations
+# groupie-tracker-Search
 
 ## Overview
 
@@ -12,7 +12,8 @@
     Concert Dates: A timeline of past and future concert dates.
 3. **Data Relations:** Use a relational model to connect artists, concert dates, and locations seamlessly.
 4.  **User-Friendly Visualizations:** Implement a variety of visual representations (cards, tables, lists) to present information clearly and attractively.
-5. **Event Handling:** Trigger client-server interactions to fetch and display data dynamically based on user actions.
+5. **Event Handling:** Trigger client-server interactions to fetch and display data dynamically based on user actions like clicking  and searching.
+6. **Search Functionality:** Implement search feature that allows the user to search for an  artist,  a member , dates, years and locations
 
 ## API Structure
 
