@@ -19,10 +19,10 @@
                 type="text" 
                 class="search-bar" 
                 id="search-bar" 
-                placeholder="Search for an artist, member, or location..."
-                oninput="performSearch()"
+                placeholder="Search for an artist, member, date, year or location..."
+               
             >
-            <ul id="suggestions" class="suggestions hidden"></ul>
+            <div id="suggestions" class="suggestion-container"></div>      
         </div>
     </header>
     <div class="container">
@@ -99,35 +99,7 @@
 
    
 
-    <script>
-        function toggleViews() {
-            const viewSelect = document.getElementById("view-select");
-            const locationsSection = document.getElementById("locations");
-            const datesSection = document.getElementById("dates");
-            const locationsAndDatesSection = document.getElementById("locationsAndDates");
-
-            // Hide all sections by default
-            locationsSection.classList.add("hidden");
-            datesSection.classList.add("hidden");
-            locationsAndDatesSection.style.display = "none";
-
-            // Show the selected section
-            switch (viewSelect.value) {
-                case "locations":
-                    locationsSection.classList.remove("hidden");
-                    break;
-                case "dates":
-                    datesSection.classList.remove("hidden");
-                    break;
-                case "locationsAndDates":
-                    locationsAndDatesSection.style.display = "block";
-                    break;
-            }
-        }
-
-        // Initially display the default view (Locations and Dates)
-        toggleViews();
-    </script>
+    <script src="/static/script.js"></script>
 
 </body>
 </html>
