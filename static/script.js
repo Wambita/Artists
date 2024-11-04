@@ -18,6 +18,7 @@ async function fetchSuggestions(query) {
         if (!response.ok) throw new Error("Failed to fetch suggestions");
 
         const suggestions = await response.json();
+
         displaySuggestions(suggestions);
     } catch (error) {
         console.error("Error fetching suggestions:", error);
@@ -29,10 +30,11 @@ function displaySuggestions(suggestions) {
     suggestionBox.innerHTML = ""; // Clear previous suggestions
 
     suggestions.forEach(suggestion => {
+        console.log(suggestion)
         const item = document.createElement("div");
         item.classList.add("suggestion-item");
-        item.innerText = `${suggestion.Name} - ${suggestion.Type}`;
-        item.addEventListener("click", () => selectSuggestion(suggestion.ID));
+        item.innerText = `${suggestion.name} - ${suggestion.type}`;
+        item.addEventListener("click", () => selectSuggestion(suggestion.id));
         suggestionBox.appendChild(item);
     });
 }
