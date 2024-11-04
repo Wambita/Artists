@@ -69,27 +69,33 @@ func LoadData() {
 		fmt.Println(artistID)
 
 		// artist
-		if err := fetchData(RelationURL+artistID, &reletions); err != nil {
-			// ErrorHandler(w, r, "Internal Server Error", http.StatusInternalServerError)
-			fmt.Println(err)
-			return
-		}
+		if len(Artists[i].DatesLocations) == 0{
+			if err := fetchData(RelationURL+artistID, &reletions); err != nil {
+				// ErrorHandler(w, r, "Internal Server Error", http.StatusInternalServerError)
+				fmt.Println(err)
+				return
+			}
+		}		
 		Artists[i].DatesLocations = reletions.DatesLocations
 
 	
-		if err := fetchData(LocationsURL+artistID, &locations); err != nil {
-			// ErrorHandler(w, r, "Internal Server Error", http.StatusInternalServerError)
-			fmt.Println(err)
-			return
-		}
+		if len(Artists[i].Locations) == 0{
+			if err := fetchData(LocationsURL+artistID, &locations); err != nil {
+				// ErrorHandler(w, r, "Internal Server Error", http.StatusInternalServerError)
+				fmt.Println(err)
+				return
+			}
+		}		
 		Artists[i].Locations = locations.Locations
 
-	
-		if err := fetchData(DatesURL+artistID, &dates); err != nil {
-			// ErrorHandler(w, r, "Internal Server Error", http.StatusInternalServerError)
-			fmt.Println(err)
-			return
+		if len(Artists[i].Locations) == 0{
+			if err := fetchData(DatesURL+artistID, &dates); err != nil {
+				// ErrorHandler(w, r, "Internal Server Error", http.StatusInternalServerError)
+				fmt.Println(err)
+				return
+			}
 		}
+		
 		Artists[i].ConcertDates = dates.ConcertDates
 		
 	}
