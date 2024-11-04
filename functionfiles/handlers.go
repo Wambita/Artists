@@ -171,36 +171,61 @@ type Suggestion struct {
 }
 
 func SearchHandler(w http.ResponseWriter, r *http.Request) {
+
+	if r.Method != http.MethodGet {
+		ErrorHandler(w, r, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	// Check if the request path is exactly /search
+	if r.URL.Path != "/search" {
+		ErrorHandler(w, r, fmt.Sprintf("The Requested path %s does not exist", r.URL.Path), http.StatusNotFound)
+		return
+	}
+
 	query := r.URL.Query().Get("q")
+	if query == "" {
+		ErrorHandler(w, r, "search content is required", http.StatusBadRequest)
+		return
+	}
+
 	query = strings.ToLower(query) // Case-insensitive search
 	var suggestions []Suggestion
+	fmt.Println(query)
 
+	
 	for _, artist := range Artists {
 		// Search by artist/band name
 		if strings.Contains(strings.ToLower(artist.Name), query) {
-			suggestions = append(suggestions, Suggestion{ID: artist.ID, Name: artist.Name, Type: "artist/band"})
+			suggestions = append(suggestions, Suggestion{ID: artist.ID, Name: artist.Name, Type: "band"})
+			// fmt.Println(artist.Name)
 		}
 		// Search by member names
 		for _, member := range artist.Members {
 			if strings.Contains(strings.ToLower(member), query) {
 				suggestions = append(suggestions, Suggestion{ID: artist.ID, Name: member, Type: "member"})
+				// fmt.Println(member)
 			}
 		}
 		// Search by locations
 		for _, location := range artist.Locations {
 			if strings.Contains(strings.ToLower(location), query) {
 				suggestions = append(suggestions, Suggestion{ID: artist.ID, Name: location, Type: "location"})
+				// fmt.Println(location)
 			}
 		}
 		// Search by creation and first album dates (converting to strings for matching)
 		if strings.Contains(fmt.Sprint(artist.Year), query) {
-			suggestions = append(suggestions, Suggestion{ID: artist.ID, Name: artist.Name, Type: "creation date"})
+			suggestions = append(suggestions, Suggestion{ID: artist.ID, Name: fmt.Sprint(artist.Year), Type: "creation date"})
+			// fmt.Println(fmt.Sprint(artist.Year))
 		}
 		if strings.Contains(fmt.Sprint(artist.Album), query) {
-			suggestions = append(suggestions, Suggestion{ID: artist.ID, Name: artist.Name, Type: "first album date"})
+			suggestions = append(suggestions, Suggestion{ID: artist.ID, Name: fmt.Sprint(artist.Album), Type: "first album date"})
+			// fmt.Println(fmt.Sprint(artist.Album))
 		}
 	}
-
+	
+	w.WriteHeader(http.StatusOK)
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(suggestions)
 }

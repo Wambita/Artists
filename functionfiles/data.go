@@ -66,8 +66,6 @@ func LoadData() {
 
 		var dates concertDates
 
-		fmt.Println(artistID)
-
 		// artist
 		if len(Artists[i].DatesLocations) == 0{
 			if err := fetchData(RelationURL+artistID, &reletions); err != nil {
