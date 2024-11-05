@@ -9,6 +9,9 @@ document.getElementById("search-bar").addEventListener("input", function () {
         searchTimeout = setTimeout(() => {
             fetchSuggestions(query);
         }, 300); // Adjust debounce time as needed
+    }else{
+        document.getElementById("suggestions").innerHTML = ""
+        document.getElementById("suggestions").classList = "hidden"
     }
 });
 
@@ -18,6 +21,7 @@ async function fetchSuggestions(query) {
         if (!response.ok) throw new Error("Failed to fetch suggestions");
 
         const suggestions = await response.json();
+        // console.log(suggestions)
 
         displaySuggestions(suggestions);
     } catch (error) {
@@ -28,15 +32,19 @@ async function fetchSuggestions(query) {
 function displaySuggestions(suggestions) {
     const suggestionBox = document.getElementById("suggestions");
     suggestionBox.innerHTML = ""; // Clear previous suggestions
+    
+    if (suggestions != null){
+        suggestionBox.classList = "suggestion-container";
 
-    suggestions.forEach(suggestion => {
-        console.log(suggestion)
-        const item = document.createElement("div");
-        item.classList.add("suggestion-item");
-        item.innerText = `${suggestion.name} - ${suggestion.type}`;
-        item.addEventListener("click", () => selectSuggestion(suggestion.id));
-        suggestionBox.appendChild(item);
-    });
+        suggestions.forEach(suggestion => {
+            const item = document.createElement("li");
+            item.innerText = `${suggestion.name}   (${suggestion.type})`;
+            item.addEventListener("click", () => selectSuggestion(suggestion.id));
+            suggestionBox.appendChild(item);
+        });
+    }else{
+        suggestionBox.classList = "hidden";
+    }  
 }
 
 function selectSuggestion(id) {
@@ -70,6 +78,3 @@ function toggleViews() {
             break;
     }
 }
-
-// Initially display the default view (Locations and Dates)
-toggleViews();
