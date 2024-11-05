@@ -37,7 +37,7 @@ body {
     padding: 12px;
     font-size: 1rem;
     border: 2px solid #1ed760;
-    border-radius: 20px;
+    border-radius: 0.5em;
     color: #e0e0e0;
     background: linear-gradient(135deg, #1a2a1d 0%, #0d1f12 100%);
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
@@ -57,24 +57,59 @@ body {
 }
 
 /* Suggestions Dropdown */
-.suggestion-container {
-  position: absolute;
-  background-color: white;
-  border: 1px solid #ddd;
-  max-height: 200px;
-  overflow-y: auto;
-  width: 100%;
-}
-
 .suggestion-item {
   padding: 8px;
   cursor: pointer;
+}
+
+.dropDown{
+  min-width: 15em;
+  position: relative;
+  margin: 2em;
+}
+
+.suggestion-container{
+  list-style: none;
+  padding: 0.2em 0.1em;
+  background: #0c5a28e3;
+  border: 1px #363a43;
+  box-shadow: 0 0.5em 1em rgba(0, 0, 0, 0.2);
+  border-radius: 0.5em;
+  color: #18bb54;
+  position: absolute;
+  top: 2.2em;
+  left: 50%;
+  width: 100%;
+  transform: translate(-50%);
+  transform: 0.2s;
+  z-index: 1;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.suggestion-container li{
+  padding: 0.7em 0.5em;
+  margin: 0.3em 0;
+  border-radius: 0.5em;
+  cursor: pointer;
+}
+
+.suggestion-container li:hover{
+  background: #0a1e0fe6;
+}
+
+.suggestion-container-open {
+  display: block;
+  opacity: 1;
 }
 
 .suggestion-item:hover {
   background-color: #f0f0f0;
 }
 
+.hidden {
+  display: none;
+}
 
 
 .artist-list {
@@ -113,7 +148,7 @@ body {
     padding: 20px;
     text-align: center;
     font-weight: 600;
-    background-color: rgba(10, 30, 15, 0.9);
+    background-color: #0a1e0fe6;
     position: absolute;
     bottom: 0;
     left: 0;
