@@ -15,10 +15,11 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 		ErrorHandler(w, r, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
-
+	w.WriteHeader(http.StatusOK)
+	
 	// pass artists slice to the template
 	err := Templates.ExecuteTemplate(w, "index.html", Artists)
-	w.WriteHeader(http.StatusOK)
+
 	if err != nil {
 		ErrorHandler(w, r, "Internal  Server Error", http.StatusInternalServerError)
 	}
