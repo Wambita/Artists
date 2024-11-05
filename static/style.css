@@ -68,14 +68,14 @@ body {
   margin: 2em;
 }
 
-.suggestion-container{
+.suggestion-container {
   list-style: none;
   padding: 0.2em 0.1em;
   background: #0c5a28e3;
   border: 1px #363a43;
   box-shadow: 0 0.5em 1em rgba(0, 0, 0, 0.2);
   border-radius: 0.5em;
-  color: #18bb54;
+  color: #ffffffc0;
   position: absolute;
   top: 2.2em;
   left: 50%;
@@ -87,15 +87,26 @@ body {
   overflow-y: auto;
 }
 
-.suggestion-container li{
+
+.suggestion-container li {
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
   padding: 0.7em 0.5em;
   margin: 0.3em 0;
   border-radius: 0.5em;
   cursor: pointer;
 }
 
-.suggestion-container li:hover{
+.suggestion-container li:hover {
   background: #0a1e0fe6;
+}
+
+.suggestion-container li a {
+  text-align: right;
+  font-weight: bold;
+  color: #ffffffc0;
+  margin-left: auto;
 }
 
 .suggestion-container-open {

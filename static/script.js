@@ -38,7 +38,7 @@ function displaySuggestions(suggestions) {
 
         suggestions.forEach(suggestion => {
             const item = document.createElement("li");
-            item.innerText = `${suggestion.name}   (${suggestion.type})`;
+            item.innerHTML = `${suggestion.name}   <a>${suggestion.type}</a>`;
             item.addEventListener("click", () => selectSuggestion(suggestion.id));
             suggestionBox.appendChild(item);
         });
