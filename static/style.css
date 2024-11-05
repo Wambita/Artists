@@ -62,12 +62,6 @@ body {
   cursor: pointer;
 }
 
-.dropDown{
-  min-width: 15em;
-  position: relative;
-  margin: 2em;
-}
-
 .suggestion-container {
   list-style: none;
   padding: 0.2em 0.1em;
