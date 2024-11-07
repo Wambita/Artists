@@ -208,7 +208,7 @@ func SearchHandler(w http.ResponseWriter, r *http.Request) {
 		// Search by locations
 		for _, location := range artist.Locations {
 			if strings.Contains(strings.ToLower(location), query) {
-				suggestions = append(suggestions, Suggestion{ID: artist.ID, Name: location, Type: "location"})
+				suggestions = append(suggestions, Suggestion{ID: artist.ID, Name: artist.Name, Type: "location"})
 				// fmt.Println(location)
 			}
 		}
