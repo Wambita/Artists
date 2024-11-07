@@ -16,10 +16,9 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.WriteHeader(http.StatusOK)
-	
+
 	// pass artists slice to the template
 	err := Templates.ExecuteTemplate(w, "index.html", Artists)
-
 	if err != nil {
 		ErrorHandler(w, r, "Internal  Server Error", http.StatusInternalServerError)
 	}
@@ -172,7 +171,6 @@ type Suggestion struct {
 }
 
 func SearchHandler(w http.ResponseWriter, r *http.Request) {
-
 	if r.Method != http.MethodGet {
 		ErrorHandler(w, r, "Method not allowed", http.StatusMethodNotAllowed)
 		return
@@ -194,11 +192,10 @@ func SearchHandler(w http.ResponseWriter, r *http.Request) {
 	var suggestions []Suggestion
 	fmt.Println(query)
 
-	
 	for _, artist := range Artists {
 		// Search by artist/band name
 		if strings.Contains(strings.ToLower(artist.Name), query) {
-			suggestions = append(suggestions, Suggestion{ID: artist.ID, Name: artist.Name, Type: "band"})
+			suggestions = append(suggestions, Suggestion{ID: artist.ID, Name: artist.Name, Type: "artist/band"})
 			// fmt.Println(artist.Name)
 		}
 		// Search by member names
@@ -225,7 +222,7 @@ func SearchHandler(w http.ResponseWriter, r *http.Request) {
 			// fmt.Println(fmt.Sprint(artist.Album))
 		}
 	}
-	
+
 	w.WriteHeader(http.StatusOK)
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(suggestions)
