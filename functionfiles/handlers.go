@@ -214,11 +214,11 @@ func SearchHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		// Search by creation and first album dates (converting to strings for matching)
 		if strings.Contains(fmt.Sprint(artist.Year), query) {
-			suggestions = append(suggestions, Suggestion{ID: artist.ID, Name: fmt.Sprint(artist.Year), Type: "creation date"})
+			suggestions = append(suggestions, Suggestion{ID: artist.ID, Name: artist.Name, Type: "creation date"})
 			// fmt.Println(fmt.Sprint(artist.Year))
 		}
 		if strings.Contains(fmt.Sprint(artist.Album), query) {
-			suggestions = append(suggestions, Suggestion{ID: artist.ID, Name: fmt.Sprint(artist.Album), Type: "first album date"})
+			suggestions = append(suggestions, Suggestion{ID: artist.ID, Name: artist.Name, Type: "first album date"})
 			// fmt.Println(fmt.Sprint(artist.Album))
 		}
 	}
