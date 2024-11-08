@@ -6,8 +6,6 @@ import (
 	"net/http"
 	"os"
 
-	// "path/filepath"
-
 	groupie_tracker "groupie-tracker/functionfiles"
 )
 
@@ -35,6 +33,6 @@ func main() {
 	if port == "" {
 		port = "8080"
 	}
-	fmt.Printf("Starting server on port %s...\n", port)
+	fmt.Printf("Starting server on port http://localhost:%s...\n", port)
 	log.Fatal(http.ListenAndServe(":"+port, nil))
 }
