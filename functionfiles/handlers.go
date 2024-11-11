@@ -190,7 +190,7 @@ func SearchHandler(w http.ResponseWriter, r *http.Request) {
 
 	query = strings.ToLower(query) // Case-insensitive search
 	var suggestions []Suggestion
-	fmt.Println(query)
+	// fmt.Println(query)
 
 	for _, artist := range Artists {
 		// Search by artist/band name
@@ -208,17 +208,17 @@ func SearchHandler(w http.ResponseWriter, r *http.Request) {
 		// Search by locations
 		for _, location := range artist.Locations {
 			if strings.Contains(strings.ToLower(location), query) {
-				suggestions = append(suggestions, Suggestion{ID: artist.ID, Name: artist.Name, Type: "location"})
+				suggestions = append(suggestions, Suggestion{ID: artist.ID, Name: location, Type: "location"})
 				// fmt.Println(location)
 			}
 		}
 		// Search by creation and first album dates (converting to strings for matching)
 		if strings.Contains(fmt.Sprint(artist.Year), query) {
-			suggestions = append(suggestions, Suggestion{ID: artist.ID, Name: artist.Name, Type: "creation date"})
+			suggestions = append(suggestions, Suggestion{ID: artist.ID, Name: strconv.Itoa(artist.Year), Type: "creation date"})
 			// fmt.Println(fmt.Sprint(artist.Year))
 		}
 		if strings.Contains(fmt.Sprint(artist.Album), query) {
-			suggestions = append(suggestions, Suggestion{ID: artist.ID, Name: artist.Name, Type: "first album date"})
+			suggestions = append(suggestions, Suggestion{ID: artist.ID, Name: artist.Album, Type: "first album date"})
 			// fmt.Println(fmt.Sprint(artist.Album))
 		}
 	}
