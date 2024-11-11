@@ -2,7 +2,7 @@
 
 ## Overview
 
-**Groupie Tracker Search** is a web application designed to receive, manipulate, and display data from a provided API related to music artists, their concert locations, and dates. This project focuses on creating an engaging user experience through various data visualizations while ensuring robust client-server communication.
+**Groupie Tracker Search** is a web application designed to receive, manipulate, search, and display data from a provided API related to music artists, their concert locations, and dates. This project focuses on creating an engaging user experience through dynamic data visualizations and a comprehensive search functionality, allowing users to find artists, bands, and specific concert details easily. With an intuitive search bar, users can explore artists, band members, concert locations, album release dates, and creation dates. The platform emphasizes efficient client-server communication and seamless data retrieval, making it easy to discover and track favorite artists.
 
 ## Features
 
