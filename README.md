@@ -40,7 +40,7 @@ Basic understanding of HTML/CSS/JAVASCRIPT for front-end development.
 * Clone the Repository:
 ```bash
 
-git clone https://learn.zone01kisumu.ke/git/shfana/groupie-tracker-visualizations
+git clone https://learn.zone01kisumu.ke/git/tabila/groupie-tracker-search-bar
 
 cd groupie-tracker
 ```
