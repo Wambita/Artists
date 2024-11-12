@@ -1,11 +1,11 @@
 package groupie_tracker
 
 import (
-	"fmt"
-	"strconv"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
+	"strconv"
 )
 
 // Api  urls
@@ -42,12 +42,12 @@ func LoadData() {
 
 	Artists = ar
 
-	for i := range Artists {		
+	for i := range Artists {
 		go loadDatesLocations(i)
 	}
 }
 
-func loadDatesLocations(i int){
+func loadDatesLocations(i int) {
 	artistID := strconv.Itoa(Artists[i].ID)
 
 	// Define a struct for the expected data structure
@@ -72,32 +72,31 @@ func loadDatesLocations(i int){
 	var dates concertDates
 
 	// artist
-	if len(Artists[i].DatesLocations) == 0{
+	if len(Artists[i].DatesLocations) == 0 {
 		if err := fetchData(RelationURL+artistID, &reletions); err != nil {
 			// ErrorHandler(w, r, "Internal Server Error", http.StatusInternalServerError)
 			fmt.Println(err)
 			return
 		}
-	}		
+	}
 	Artists[i].DatesLocations = reletions.DatesLocations
 
-
-	if len(Artists[i].Locations) == 0{
+	if len(Artists[i].Locations) == 0 {
 		if err := fetchData(LocationsURL+artistID, &locations); err != nil {
 			// ErrorHandler(w, r, "Internal Server Error", http.StatusInternalServerError)
 			fmt.Println(err)
 			return
 		}
-	}		
+	}
 	Artists[i].Locations = locations.Locations
 
-	if len(Artists[i].Locations) == 0{
+	if len(Artists[i].Locations) == 0 {
 		if err := fetchData(DatesURL+artistID, &dates); err != nil {
 			// ErrorHandler(w, r, "Internal Server Error", http.StatusInternalServerError)
 			fmt.Println(err)
 			return
 		}
 	}
-	
+
 	Artists[i].ConcertDates = dates.ConcertDates
 }
