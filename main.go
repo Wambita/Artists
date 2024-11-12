@@ -6,8 +6,6 @@ import (
 	"net/http"
 	"os"
 
-	// "path/filepath"
-
 	groupie_tracker "groupie-tracker/functionfiles"
 )
 
@@ -25,6 +23,7 @@ func main() {
 	// Set routes
 	http.HandleFunc("/", groupie_tracker.RouteHandler)
 	http.HandleFunc("/artist", groupie_tracker.ArtistHandler)
+	http.HandleFunc("/search", groupie_tracker.SearchHandler)
 
 	// Serve static files
 	http.HandleFunc("/static/", groupie_tracker.StaticFileHandler)
@@ -34,6 +33,6 @@ func main() {
 	if port == "" {
 		port = "8080"
 	}
-	fmt.Printf("Starting server on port %s...\n", port)
+	fmt.Printf("Starting server on port http://localhost:%s...\n", port)
 	log.Fatal(http.ListenAndServe(":"+port, nil))
 }

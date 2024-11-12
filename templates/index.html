@@ -10,15 +10,21 @@
       <!-- Header section for title and search bar -->
     <header class="header">
         <a class="h1" href="/">Groupie Tracker</a>
+        
+        <div class="dropDown">                        
+            
+        </div>
+
         <div class="search-bar-container">
-            <input 
-                type="text" 
-                class="search-bar" 
-                id="search-bar" 
-                placeholder="Search for an artist, member, or location..."
-                oninput="performSearch()"
-            >
-            <ul id="suggestions" class="suggestions hidden"></ul>
+                <input 
+                    type="text" 
+                    class="search-bar" 
+                    id="search-bar" 
+                    placeholder="Search for an artist, member, date, year  or location..."
+
+                > 
+
+                <ul id="suggestions" class="hidden"></ul>
         </div>
     </header>
 
@@ -34,5 +40,45 @@
             </div>
         {{end}}
     </div>
-</body>
+    <script>
+
+function performSearch() {
+    const query = document.getElementById("search-bar").value.toLowerCase();
+    fetch(`/search?q=${query}`)  // Send the fetch request with the search query
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return response.json(); // Parse the JSON from the response
+        })
+        .then(data => displaySuggestions(data)) // Use the suggestions to update the UI
+        .catch(error => console.error("Error fetching suggestions:", error)); // Handle errors
+}
+
+function displaySuggestions(suggestions) {
+    const suggestionsList = document.getElementById("suggestions");
+    suggestionsList.innerHTML = ""; // Clear previous suggestions
+
+    suggestions.forEach(suggestion => {
+        // Create a list item
+        const listItem = document.createElement("li");
+        
+        // Create a clickable link
+        const link = document.createElement("a");
+        link.href = `/artist?id=${suggestion.id}`; // Use the ID to load artist info   
+        link.textContent = `${suggestion.name} - ${suggestion.type}`;
+        link.onclick = function (event) {
+            event.preventDefault(); // Prevent default anchor behavior
+            window.location.href = link.href; // Redirect to the artist details page
+        };
+
+        listItem.appendChild(link);
+        suggestionsList.appendChild(listItem);
+    });
+
+    suggestionsList.classList.remove("hidden"); // Show the suggestions list
+}
+    </script>
+    <script src="/static/script.js"></script> <!-- Load the JavaScript file for search functionality -->
+ </body>
 </html>

@@ -1,8 +1,8 @@
-# groupie-tracker-visualizations
+# groupie-tracker-Search
 
 ## Overview
 
-**Groupie Tracker Visualizations** is a web application designed to receive, manipulate, and display data from a provided API related to music artists, their concert locations, and dates. This project focuses on creating an engaging user experience through various data visualizations while ensuring robust client-server communication.
+**Groupie Tracker Search** is a web application designed to receive, manipulate, search, and display data from a provided API related to music artists, their concert locations, and dates. This project focuses on creating an engaging user experience through dynamic data visualizations and a comprehensive search functionality, allowing users to find artists, bands, and specific concert details easily. With an intuitive search bar, users can explore artists, band members, concert locations, album release dates, and creation dates. The platform emphasizes efficient client-server communication and seamless data retrieval, making it easy to discover and track favorite artists.
 
 ## Features
 
@@ -12,7 +12,8 @@
     Concert Dates: A timeline of past and future concert dates.
 3. **Data Relations:** Use a relational model to connect artists, concert dates, and locations seamlessly.
 4.  **User-Friendly Visualizations:** Implement a variety of visual representations (cards, tables, lists) to present information clearly and attractively.
-5. **Event Handling:** Trigger client-server interactions to fetch and display data dynamically based on user actions.
+5. **Event Handling:** Trigger client-server interactions to fetch and display data dynamically based on user actions like clicking  and searching.
+6. **Search Functionality:** Implement search feature that allows the user to search for an  artist,  a member , dates, years and locations
 
 ## API Structure
 
@@ -39,7 +40,7 @@ Basic understanding of HTML/CSS/JAVASCRIPT for front-end development.
 * Clone the Repository:
 ```bash
 
-git clone https://learn.zone01kisumu.ke/git/shfana/groupie-tracker-visualizations
+git clone https://learn.zone01kisumu.ke/git/tabila/groupie-tracker-search-bar
 
 cd groupie-tracker
 ```
