@@ -8,7 +8,7 @@ document.getElementById("search-bar").addEventListener("input", function () {
     if (query.length > 0) {
         searchTimeout = setTimeout(() => {
             fetchSuggestions(query);
-        }, 300); // Adjust debounce time as needed
+        }, 300); 
     }else{
         document.getElementById("suggestions").innerHTML = ""
         document.getElementById("suggestions").classList = "hidden"
@@ -21,7 +21,7 @@ async function fetchSuggestions(query) {
         if (!response.ok) throw new Error("Failed to fetch suggestions");
 
         const suggestions = await response.json();
-        // console.log(suggestions)
+       
 
         displaySuggestions(suggestions);
     } catch (error) {
